@@ -9,4 +9,6 @@ To run try
 dotnet run
 ```
 
+It is built with [Terminal.Gui](https://gui-cs.github.io/Terminal.Gui/index.html)
+
 ![Screenshot](screenshot.PNG)
