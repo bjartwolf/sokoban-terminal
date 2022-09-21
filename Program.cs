@@ -31,9 +31,15 @@ static bool Quit()
 
 
 var game = "####\r\n#  #######\r\n#  ......#\r\n#  ##### #\r\n##   $@# #\r\n #  $$$$ #\r\n ##  $ ###\r\n  #    #\r\n  ######\r\n";
-win.Add(
-    new Label(3, 3, game)
-);
+var gameWindow = new Label(3, 3, game);
+win.Add( gameWindow);
+win.KeyDown += KeyPress;
+
+void KeyPress(View.KeyEventEventArgs obj)
+{
+    game += obj.KeyEvent.ToString();
+    gameWindow.Text = game;
+}
 
 Application.Run();
 Application.Shutdown();
