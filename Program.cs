@@ -1,5 +1,4 @@
 ﻿using Terminal.Gui;
-using NStack;
 
 Application.Init();
 var top = Application.Top;
@@ -17,7 +16,6 @@ var win = new Window("MyApp")
 
 top.Add(win);
 
-// Creates a menubar, the item "New" has a help menu.
 var menu = new MenuBar(new MenuBarItem[] {
     new MenuBarItem ("_File", new MenuItem [] {
         new MenuItem ("_Quit", "", () => { if (Quit ()) top.Running = false; })
@@ -31,10 +29,7 @@ static bool Quit()
     return n == 0;
 }
 
-// Add some controls, 
 win.Add(
-    // The ones with my favorite layout system, Computed
-
     new Label(3, 18, "Game will come in here")
 );
 
