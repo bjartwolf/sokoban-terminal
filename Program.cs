@@ -4,7 +4,7 @@ Application.Init();
 var top = Application.Top;
 
 // Creates the top-level window to show
-var win = new Window("MyApp")
+var win = new Window("Sokoban - the retro game in a retro looking terminal")
 {
     X = 0,
     Y = 1, // Leave one row for the toplevel menu
@@ -25,14 +25,14 @@ top.Add(menu);
 
 static bool Quit()
 {
-    var n = MessageBox.Query(50, 7, "Quit Demo", "Are you sure you want to quit this demo?", "Yes", "No");
+    var n = MessageBox.Query(50, 7, "Quit game", "You're trying to say you like DOS\r\nbetter than me, right?", "Yes", "No");
     return n == 0;
 }
 
 
 var game = "####\r\n#  #######\r\n#  ......#\r\n#  ##### #\r\n##   $@# #\r\n #  $$$$ #\r\n ##  $ ###\r\n  #    #\r\n  ######\r\n";
 win.Add(
-    new Label(3, 18, game)
+    new Label(3, 3, game)
 );
 
 Application.Run();
