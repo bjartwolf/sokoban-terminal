@@ -4,5 +4,5 @@ open System
 open Xunit
 
 [<Fact>]
-let ``My test`` () =
-    Assert.True(true)
+let ``Game is not blank`` () =
+    Assert.True(game.gameControl.getGame().Length > 4)
