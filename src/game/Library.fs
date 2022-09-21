@@ -1,5 +1,15 @@
 ﻿namespace game
 
-module Say =
-    let hello name =
-        printfn "Hello %s" name
+module gameControl =
+    let getGame () = 
+        @"
+        ####
+        #  #######
+        #  ......#
+        #  ##### #
+        ##   $@# #
+         #  $$$$ #
+         ##  $ ###
+          #    #
+          ######";
+

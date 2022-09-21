@@ -30,15 +30,18 @@ static bool Quit()
 }
 
 
-var game = "####\r\n#  #######\r\n#  ......#\r\n#  ##### #\r\n##   $@# #\r\n #  $$$$ #\r\n ##  $ ###\r\n  #    #\r\n  ######\r\n";
-var gameWindow = new Label(3, 3, game);
+
+var board = game.gameControl.getGame();
+
+var gameWindow = new Label(3, 3, board);
+
 win.Add( gameWindow);
 win.KeyDown += KeyPress;
 
 void KeyPress(View.KeyEventEventArgs obj)
 {
-    game += obj.KeyEvent.ToString();
-    gameWindow.Text = game;
+    board += obj.KeyEvent.ToString();
+    gameWindow.Text = board;
 }
 
 Application.Run();
