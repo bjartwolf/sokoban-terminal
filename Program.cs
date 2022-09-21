@@ -29,8 +29,10 @@ static bool Quit()
     return n == 0;
 }
 
+
+var game = "####\r\n#  #######\r\n#  ......#\r\n#  ##### #\r\n##   $@# #\r\n #  $$$$ #\r\n ##  $ ###\r\n  #    #\r\n  ######\r\n";
 win.Add(
-    new Label(3, 18, "Game will come in here")
+    new Label(3, 18, game)
 );
 
 Application.Run();
