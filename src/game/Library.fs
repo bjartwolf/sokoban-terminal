@@ -62,3 +62,6 @@ module game =
             board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
         
 
+    let serializeBoard (board: Board) : string =
+        let foo = board |> List.map (fun f -> new String (f |> List.toArray))
+        foo |> String.concat Environment.NewLine 
