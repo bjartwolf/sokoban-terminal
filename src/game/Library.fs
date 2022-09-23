@@ -36,5 +36,8 @@ module game =
             |> List.filter (fun l -> l <> [])
 
     let getPlayerPosition (board: Board): int*int =
-        (0,0)
+        let whichLine = List.findIndex (fun l -> l |> List.contains player) board
+        let lineWithPlayer = board.[whichLine]
+        let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player)
+        (whichLine, playerPosition) 
         
