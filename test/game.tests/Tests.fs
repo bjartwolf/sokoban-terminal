@@ -25,11 +25,7 @@ let parse_empty_string_returns_empty_board() =
 let parseBoards () =  
     let board = game.gameControl.parseBoard(game.gameControl.init())
     Assert.True('#' = board.Head.Head) 
-
-
-
-
-
-
+    Assert.True(9 = board.Length)
+    Assert.True(4 = board.Head.Length)
 
 
