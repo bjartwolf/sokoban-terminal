@@ -12,9 +12,6 @@ module gameControl =
 #    #
 ######"
 
-    let getGameSmall () = @"
-##
-##"
     // http://www.sokobano.de/wiki/index.php?title=Level_format
     let wall = '#'
     let player = '@'
