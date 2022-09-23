@@ -21,5 +21,8 @@ module gameControl =
     let goal_square = '.'
     let floor = ' '
 
-
+    let keypress_left = 'h'
+    let keypress_down = 'j'
+    let keypress_up = 'k'
+    let keypress_right = 'l'
 
