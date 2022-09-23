@@ -16,6 +16,11 @@ let parse_wall_returns_wall () =
 let parse_character_returns_character() = 
     Assert.True([['@']] =  game.gameControl.parseBoard("@"))
 
+[<Fact>]
+let parse_empty_string_returns_empty_board() = 
+    Assert.True([[]] =  game.gameControl.parseBoard(""))
+
+
 
 
 

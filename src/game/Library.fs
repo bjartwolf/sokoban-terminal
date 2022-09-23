@@ -29,4 +29,5 @@ module gameControl =
     let keypress_right = 'l'
 
     let parseBoard (board:string): Board = 
+        if board = "" then [[]] else 
         if (board = "#") then [['#']] else [['@']] 
