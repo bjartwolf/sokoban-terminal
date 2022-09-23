@@ -6,7 +6,7 @@ There is no game, though. Just looks like it for now.
 
 To run try
 ```
-dotnet run --project .\src\terminal\sokoban-terminal.csproj
+dotnet run --project src/terminal/sokoban-terminal.csproj
 ```
 
 It is built with [Terminal.Gui](https://gui-cs.github.io/Terminal.Gui/index.html)
