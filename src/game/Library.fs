@@ -41,20 +41,24 @@ module game =
         let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player)
         (whichLine, playerPosition) 
         
+    // y is first index , growing down on the board
+    // x is index in array, growing to the right 
     let movePlayer (board: Board) (move: Char): Board =
-        let (x,y) = getPlayerPosition board
+        let (y,x) = getPlayerPosition board
         let (Δx,Δy)= match move with
                                 | 'h' -> (-1,0) 
-                                | 'j' -> (-1,0) 
+                                | 'j' -> (0,-1) 
                                 | 'k' -> (1,0) 
                                 | 'l' -> (0,1) 
                                 | _ -> failwith "not a valid move" 
+        let lineWithPlayer = board.[y] 
+        let lineWithoutPlayer = List.updateAt x floor lineWithPlayer // must be smarter depending on what was there
         if (Δx <>0 ) then 
-            let lineWithPlayer = board.[x] 
             let lineWithoutPlayer = List.updateAt x floor lineWithPlayer
             let lineWithPlayerInNewPos = List.updateAt (x+Δx) player lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
-            board
+            let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
+            board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
         
 
