@@ -35,7 +35,20 @@ let getPlayerPosition_OnlyPlayer_00 () =
     Assert.True((0,0) = game.getPlayerPosition board)
 
 [<Fact>]
-let getPlayerPosition_initial_board() =
+let getPlayerPosition_initial_board () =
     let board = game.parseBoard(game.init())
     Assert.True((4,6) = game.getPlayerPosition board)
 
+[<Fact>]
+let moveLeft_PlayerCanMove_PlayerMovesLeft () =
+    let boardBefore = @"
+..
+.@"
+    let boardAfter = @"
+..
+@."
+    let board = game.parseBoard(boardBefore)
+    let expectedNewPostition = game.parseBoard(boardAfter) 
+    let newBoard = game.movePlayer board 'h'
+    let positionAreEqual =  (expectedNewPostition = newBoard)
+    Assert.True(positionAreEqual) 

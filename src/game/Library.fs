@@ -41,3 +41,20 @@ module game =
         let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player)
         (whichLine, playerPosition) 
         
+    let movePlayer (board: Board) (move: Char): Board =
+        let (x,y) = getPlayerPosition board
+        let (Δx,Δy)= match move with
+                                | 'h' -> (-1,0) 
+                                | 'j' -> (-1,0) 
+                                | 'k' -> (1,0) 
+                                | 'l' -> (0,1) 
+                                | _ -> failwith "not a valid move" 
+        if (Δx <>0 ) then 
+            let lineWithPlayer = board.[x] 
+            let lineWithoutPlayer = List.updateAt x goal_square lineWithPlayer
+            let lineWithPlayerInNewPos = List.updateAt (x+Δx) player lineWithoutPlayer
+            board |> List.updateAt y lineWithPlayerInNewPos 
+        else
+            board
+        
+
