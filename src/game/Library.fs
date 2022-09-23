@@ -35,6 +35,6 @@ module game =
             |> List.map (fun l -> l.ToCharArray() |> Array.toList)
             |> List.filter (fun l -> l <> [])
 
-    let getPlayerPosition (board: Board) (keypress: char): int*int =
+    let getPlayerPosition (board: Board): int*int =
         (0,0)
         

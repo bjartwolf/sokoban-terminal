@@ -29,6 +29,7 @@ let parseBoards () =
     Assert.True(9 = board.Length)
     Assert.True(4 = board.Head.Length)
 
-//[<Fact>]
-//let getPlayerPosition_OnlyPlayer_00 () =
-//    let board = parseBoards("@")
+[<Fact>]
+let getPlayerPosition_OnlyPlayer_00 () =
+    let board = game.parseBoard("@")
+    Assert.True((0,0) = game.getPlayerPosition board)
