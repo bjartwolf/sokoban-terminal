@@ -1,4 +1,5 @@
 ﻿namespace game
+open System
 
 module gameControl =
     type Board = char list list
@@ -29,5 +30,7 @@ module gameControl =
     let keypress_right = 'l'
 
     let parseBoard (board:string): Board = 
-        if board = "" then [[]] else 
-        if (board = "#") then [['#']] else [['@']] 
+        let parseLine (l: string): char list = l.ToCharArray() |> Array.toList
+        let lines = board.Split(Environment.NewLine) |> Array.toList
+        let parseBoard = List.map parseLine
+        parseBoard lines
