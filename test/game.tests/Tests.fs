@@ -42,11 +42,11 @@ let getPlayerPosition_initial_board () =
 [<Fact>]
 let moveLeft_PlayerCanMove_PlayerMovesLeft () =
     let boardBefore = @"
-..
-.@"
+   
+ @"
     let boardAfter = @"
-..
-@."
+   
+@ "
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
     let newBoard = game.movePlayer board 'h'

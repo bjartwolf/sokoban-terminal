@@ -51,7 +51,7 @@ module game =
                                 | _ -> failwith "not a valid move" 
         if (Δx <>0 ) then 
             let lineWithPlayer = board.[x] 
-            let lineWithoutPlayer = List.updateAt x goal_square lineWithPlayer
+            let lineWithoutPlayer = List.updateAt x floor lineWithPlayer
             let lineWithPlayerInNewPos = List.updateAt (x+Δx) player lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
