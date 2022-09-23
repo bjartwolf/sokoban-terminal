@@ -30,7 +30,7 @@ module gameControl =
     let keypress_right = 'l'
 
     let parseBoard (board:string): Board = 
-        let parseLine (l: string): char list = l.ToCharArray() |> Array.toList
-        let lines = board.Split(Environment.NewLine) |> Array.toList 
-        let parseBoard = List.map parseLine
-        parseBoard lines |> List.filter (fun l -> l <> [])
+        board.Split(Environment.NewLine) 
+            |> Array.toList 
+            |> List.map (fun l -> l.ToCharArray() |> Array.toList)
+            |> List.filter (fun l -> l <> [])
