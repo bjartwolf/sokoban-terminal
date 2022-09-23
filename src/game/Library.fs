@@ -1,7 +1,7 @@
-﻿namespace game
+﻿namespace sokoban 
 open System
 
-module gameControl =
+module game =
     type Board = char list list
 
     let init () = @"
@@ -34,3 +34,7 @@ module gameControl =
             |> Array.toList 
             |> List.map (fun l -> l.ToCharArray() |> Array.toList)
             |> List.filter (fun l -> l <> [])
+
+    let getPlayerPosition (board: Board) (keypress: char): int*int =
+        (0,0)
+        
