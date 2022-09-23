@@ -1,6 +1,8 @@
 ﻿namespace game
 
 module gameControl =
+    type Board = char list list
+
     let init () = @"
 ####
 #  #######
@@ -26,3 +28,5 @@ module gameControl =
     let keypress_up = 'k'
     let keypress_right = 'l'
 
+    let parseBoard (board:string): Board = 
+        if (board = "#") then [['#']] else [['@']] 
