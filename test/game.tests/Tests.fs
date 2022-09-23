@@ -10,7 +10,7 @@ let ``Game is not blank`` () =
 
 [<Fact>]
 let ``Parse and serialize returns same board except the annoying first newline`` () =
-    let initialBoard = game.init()[1..]
+    let initialBoard = game.init()
     let board = game.parseBoard(initialBoard)
     let serializedBoard = game.serializeBoard board
     Assert.True(String.Equals(initialBoard, serializedBoard)) 

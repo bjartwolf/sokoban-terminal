@@ -4,7 +4,8 @@ open System
 module game =
     type Board = char list list
 
-    let init () = @"
+    let init (): String = 
+        let board = @"
 ####
 #  #######
 #  ......#
@@ -13,7 +14,9 @@ module game =
 #  $$$$ #
 ##  $ ###
 #    #
-######"
+######" 
+        let removeFirstNewline = board |> Seq.skip (Environment.NewLine.Length) |> Seq.toArray
+        String(removeFirstNewline)
 
     // http://www.sokobano.de/wiki/index.php?title=Level_format
     let wall = '#'
