@@ -31,7 +31,7 @@ static bool Quit()
 
 
 
-var board = game.gameControl.getGame();
+var board = game.gameControl.init();
 
 var gameWindow = new Label(3, 3, board);
 
