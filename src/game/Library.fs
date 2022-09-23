@@ -31,6 +31,6 @@ module gameControl =
 
     let parseBoard (board:string): Board = 
         let parseLine (l: string): char list = l.ToCharArray() |> Array.toList
-        let lines = board.Split(Environment.NewLine) |> Array.toList
+        let lines = board.Split(Environment.NewLine) |> Array.toList 
         let parseBoard = List.map parseLine
-        parseBoard lines
+        parseBoard lines |> List.filter (fun l -> l <> [])
