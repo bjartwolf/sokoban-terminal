@@ -47,9 +47,9 @@ module game =
         let (y,x) = getPlayerPosition board
         let (Δx,Δy)= match move with
                                 | 'h' -> (-1,0) 
-                                | 'j' -> (0,-1) 
-                                | 'k' -> (1,0) 
-                                | 'l' -> (0,1) 
+                                | 'j' -> (0,1) 
+                                | 'l' -> (1,0) 
+                                | 'k' -> (0,-1) 
                                 | _ -> failwith "not a valid move" 
         let lineWithPlayer = board.[y] 
         let lineWithoutPlayer = List.updateAt x floor lineWithPlayer // must be smarter depending on what was there
