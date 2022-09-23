@@ -40,8 +40,14 @@ win.KeyDown += KeyPress;
 
 void KeyPress(View.KeyEventEventArgs obj)
 {
-    board += obj.KeyEvent.ToString();
-    gameWindow.Text = board;
+    var keypress = obj.KeyEvent.Key;
+    if (keypress == Key.h || keypress == Key.j || keypress == Key.k || keypress == Key.l)
+    {
+        var character = keypress.ToString().ToCharArray()[0];
+        board = sokoban.game.makeMove(board, character);
+        gameWindow.Text = board;
+
+    }
 }
 
 Application.Run();

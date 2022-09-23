@@ -65,3 +65,8 @@ module game =
     let serializeBoard (board: Board) : string =
         let foo = board |> List.map (fun f -> new String (f |> List.toArray))
         foo |> String.concat Environment.NewLine 
+
+    let makeMove (board: string, move: Char) = 
+        let board = parseBoard board
+        let newBoard = movePlayer board move
+        serializeBoard newBoard
