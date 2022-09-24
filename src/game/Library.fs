@@ -51,13 +51,19 @@ module game =
         with
             | _ -> None
 
+    let canPushBox (board: Board) ((x,y): int*int) ((Δx,Δy): int*int): bool = 
+        let tileBehindBox = getTile board (x+2*Δx, y+2*Δy)
+        let isFloorBehindBox = tileBehindBox = Some floor 
+        isFloorBehindBox 
+
     let legalMove (board: Board) ((Δx,Δy): int*int): bool = 
         let (x,y) = getPlayerPosition board
         let attemptedNewPosition = x+Δx,y+Δy
         let tileInNewPosition = getTile board attemptedNewPosition 
         match tileInNewPosition with
             | Some '#' -> false 
-            | Some '$' -> false 
+            | Some '$' when not (canPushBox board (x,y) (Δx,Δy)) -> false 
+            | Some '$' when (canPushBox board (x,y) (Δx,Δy)) -> true 
             | Some _ -> true
             | None -> false
         
