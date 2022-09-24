@@ -84,9 +84,10 @@ module game =
         let whatWasUnderPlayer = if tile = Some player then floor else goal_square
         let lineWithPlayer = board.[y] 
         let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
+        let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y+2*Δy) = Some goal_square 
+
         if horizontalMove then 
             let lineWithPlayerInNewPos = if isPushingBox then
-                                            let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y) = Some goal_square 
                                             let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
                                             List.updateAt (x+Δx) tile_Δ' lineWithoutPlayer
                                             |> List.updateAt (x+2*Δx) boxTile 
@@ -96,7 +97,6 @@ module game =
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
             if (isPushingBox) then 
-                let isBoxPushedOnGoalSquare = getTile board (x,y+2*Δy) = Some goal_square 
                 let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
                 let lineWithBox = board.[y+2*Δy] |> List.updateAt x boxTile 
                 board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
