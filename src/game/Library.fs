@@ -43,11 +43,8 @@ module game =
                   |> List.collect (id)
         c |> Map
 
-    //let getPlayerPosition (board: Board): int*int =
-    //    let whichLine = List.findIndex (fun l -> List.contains player l || List.contains player_on_goal_square l) board
-    //    let lineWithPlayer = board.[whichLine]
-    //    let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player || pos = player_on_goal_square)
-    //    (playerPosition, whichLine) 
+    let getPlayerPosition (board: Board): int*int =
+          board |> Map.filter (fun _ t -> t=player || t=player_on_goal_square )|> Map.keys |> Seq.head 
 
     //let getTile (board: Board) ((x,y): int*int): Char option =
     //    try

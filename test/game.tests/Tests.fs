@@ -40,10 +40,10 @@ let parseBoards () =
     Assert.True(9 = (board |> Map.filter (fun (x,y) t -> x = 0) |> Map.toList |> List.length))
     Assert.True(4 = (board |> Map.filter (fun (x,y) t -> y = 0) |> Map.toList |> List.length))
 
-//[<Fact>]
-//let getPlayerPosition_OnlyPlayer_00 () =
-//    let board = game.parseBoard("@")
-//    Assert.True((0,0) = game.getPlayerPosition board)
+[<Fact>]
+let getPlayerPosition_OnlyPlayer_00 () =
+    let board = game.parseBoard("@")
+    Assert.True((0,0) = game.getPlayerPosition board)
 
 //[<Fact>]
 //let getPlayerPosition_initial_board () =
