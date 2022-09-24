@@ -99,49 +99,49 @@ let moveDown_PlayerCantMove_NothingChanges() =
     Assert.True(positionAreEqual) 
 
 
-//[<Fact>]
-//let moveUp_PlayerCanMove_PlayerMovesUp () =
-//    let boardBefore = @"
+[<Fact>]
+let moveUp_PlayerCanMove_PlayerMovesUp () =
+    let boardBefore = @"
    
-// @"
-//    let boardAfter = @"
-// @ 
-//  "
-//    let board = game.parseBoard(boardBefore)
-//    let expectedNewPostition = game.parseBoard(boardAfter) 
-//    let newBoard = game.movePlayer board 'k'
-//    let positionAreEqual =  (expectedNewPostition = newBoard)
-//    Assert.True(positionAreEqual) 
+ @"
+    let boardAfter = @"
+ @ 
+  "
+    let board = game.parseBoard(boardBefore)
+    let expectedNewPostition = game.parseBoard(boardAfter) 
+    let newBoard = game.movePlayer board 'k'
+    let positionAreEqual =  (expectedNewPostition = newBoard)
+    Assert.True(positionAreEqual) 
 
-//[<Fact>]
-//let moveLeft_PlayerIsOnGoalSquare_PlayerMovesLeft () =
-//    let boardBefore = @"
+[<Fact>]
+let moveLeft_PlayerIsOnGoalSquare_PlayerMovesLeft () =
+    let boardBefore = @"
   
-// +"
-//    let boardAfter = @"
+ +"
+    let boardAfter = @"
   
-//@."
-//    let board = game.parseBoard(boardBefore)
-//    let expectedNewPostition = game.parseBoard(boardAfter) 
-//    let newBoard = game.movePlayer board 'h'
-//    let positionAreEqual = (expectedNewPostition = newBoard)
-//    //printfn "%A" (game.serializeBoard expectedNewPostition)
-//    //printfn "%A" (game.serializeBoard newBoard)
-//    Assert.True(positionAreEqual) 
+@."
+    let board = game.parseBoard(boardBefore)
+    let expectedNewPostition = game.parseBoard(boardAfter) 
+    let newBoard = game.movePlayer board 'h'
+    let positionAreEqual = (expectedNewPostition = newBoard)
+    //printfn "%A" (game.serializeBoard expectedNewPostition)
+    //printfn "%A" (game.serializeBoard newBoard)
+    Assert.True(positionAreEqual) 
 
-//[<Fact>]
-//let moveLeft_PlayerMovesOntoGoalSquare_PlayerIsOnTopOfGoalSquare() =
-//    let boardBefore = @"
+[<Fact>]
+let moveLeft_PlayerMovesOntoGoalSquare_PlayerIsOnTopOfGoalSquare() =
+    let boardBefore = @"
   
-//.@"
-//    let boardAfter = @"
+.@"
+    let boardAfter = @"
   
-//+ "
-//    let board = game.parseBoard(boardBefore)
-//    let expectedNewPostition = game.parseBoard(boardAfter) 
-//    let newBoard = game.movePlayer board 'h'
-//    let positionAreEqual = (expectedNewPostition = newBoard)
-//    Assert.True(positionAreEqual) 
++ "
+    let board = game.parseBoard(boardBefore)
+    let expectedNewPostition = game.parseBoard(boardAfter) 
+    let newBoard = game.movePlayer board 'h'
+    let positionAreEqual = (expectedNewPostition = newBoard)
+    Assert.True(positionAreEqual) 
 
 //[<Fact>]
 //let moveDown_PlayerTriesToPushBoxOnWall_NothingChanges() =
