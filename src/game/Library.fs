@@ -53,8 +53,7 @@ module game =
 
     let canPushBox (board: Board) ((x,y): int*int) ((Δx,Δy): int*int): bool = 
         let tileBehindBox = getTile board (x+2*Δx, y+2*Δy)
-        let isFloorBehindBox = tileBehindBox = Some floor || tileBehindBox = Some goal_square 
-        isFloorBehindBox 
+        tileBehindBox = Some floor || tileBehindBox = Some goal_square 
 
     let legalMove (board: Board) (Δ: int*int): bool = 
         let (Δx,Δy) = Δ
@@ -69,29 +68,30 @@ module game =
         
     let move (board: Board) ((Δx,Δy): int*int): Board = 
         let (x,y) = getPlayerPosition board
-        let lineWithPlayer = board.[y] 
         let tile = getTile board (x,y)
-        let tile' = getTile board (x+Δx,y+Δy)
+        let tile_Δ = getTile board (x+Δx,y+Δy)
 
-        let whatWasUnderPlayer = if tile = Some player then floor else goal_square
 
-        let tileWithPlayerOnTop = if tile' = Some goal_square || tile' = Some box_on_goal_square then
+        let tile_Δ' = if tile_Δ = Some goal_square || tile_Δ= Some box_on_goal_square then
                                      player_on_goal_square 
                                   else 
                                      player
 
-        let isPushingBox =  tile' = Some box || tile' = Some box_on_goal_square 
+        let isPushingBox =  tile_Δ = Some box || tile_Δ = Some box_on_goal_square 
 
         let horizontalMove = Δx <>0
+
+        let whatWasUnderPlayer = if tile = Some player then floor else goal_square
+        let lineWithPlayer = board.[y] 
         let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
         if horizontalMove then 
             let lineWithPlayerInNewPos = if isPushingBox then
                                             let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y) = Some goal_square 
                                             let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
-                                            List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
+                                            List.updateAt (x+Δx) tile_Δ' lineWithoutPlayer
                                             |> List.updateAt (x+2*Δx) boxTile 
                                          else
-                                            List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
+                                            List.updateAt (x+Δx) tile_Δ' lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
