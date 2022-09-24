@@ -95,7 +95,9 @@ module game =
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
             if (isPushingBox) then 
+                let lineWithBox = board.[y+2*Δy] |> List.updateAt x box 
                 board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
+                      |> List.updateAt (y+2*Δy) lineWithBox 
             else
                 board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
 
