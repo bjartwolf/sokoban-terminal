@@ -72,6 +72,18 @@ let moveRight_PlayerCantMove_NothingChanges() =
     Assert.True(positionAreEqual) 
 
 [<Fact>]
+let moveDown_PlayerCantMove_NothingChanges() =
+    let boardBefore = @"
+   
+ @"
+    let board = game.parseBoard(boardBefore)
+
+    let newBoard = game.movePlayer board 'j'
+    let positionAreEqual =  (board = newBoard)
+    Assert.True(positionAreEqual) 
+
+
+[<Fact>]
 let moveUp_PlayerCanMove_PlayerMovesUp () =
     let boardBefore = @"
    

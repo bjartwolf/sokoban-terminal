@@ -44,12 +44,19 @@ module game =
         let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player)
         (whichLine, playerPosition) 
 
-    let legalMove (board: Board) (move: int*int): bool = 
-        if move = (1,0) then
-            false
-        else 
-            true
+    let getTile (board: Board) ((x,y): int*int): Char option =
+        try
+            let piece = board.[y].[x]  
+            Some piece
+        with
+            | _ -> None
 
+    let legalMove (board: Board) ((Δx,Δy): int*int): bool = 
+        let (y,x) = getPlayerPosition board
+        let tile = getTile board (x+Δx,y+Δy)
+        match tile with
+            | Some _ -> true
+            | None -> false
         
     let move (board: Board) ((Δx,Δy): int*int): Board = 
         let (y,x) = getPlayerPosition board
