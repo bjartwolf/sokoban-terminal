@@ -80,10 +80,17 @@ module game =
                                         | Some character when character = goal_square -> player_on_goal_square 
                                         | Some _ -> player 
                                         | _ -> failwith "Should not happen" 
- 
+        let isPushingBox =  match getTile board (x+Δx,y+Δy) with
+                                        | Some character when character = box -> true 
+                                        | _ -> false 
+
         let horizontalMove = Δx <>0
         if horizontalMove then 
-            let lineWithPlayerInNewPos = List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
+            let lineWithPlayerInNewPos = if isPushingBox then
+                                            List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
+                                            |> List.updateAt (x+2*Δx) box 
+                                         else
+                                            List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
