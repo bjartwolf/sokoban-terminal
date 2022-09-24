@@ -39,9 +39,9 @@ module game =
             |> List.filter (fun l -> l <> [])
 
     let getPlayerPosition (board: Board): int*int =
-        let whichLine = List.findIndex (fun l -> l |> List.contains player) board
+        let whichLine = List.findIndex (fun l -> List.contains player l || List.contains player_on_goal_square l) board
         let lineWithPlayer = board.[whichLine]
-        let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player)
+        let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player || pos = player_on_goal_square)
         (playerPosition, whichLine) 
 
     let getTile (board: Board) ((x,y): int*int): Char option =
@@ -62,7 +62,11 @@ module game =
     let move (board: Board) ((Δx,Δy): int*int): Board = 
         let (x,y) = getPlayerPosition board
         let lineWithPlayer = board.[y] 
-        let lineWithoutPlayer = List.updateAt x floor lineWithPlayer // must be smarter depending on what was there
+        let whatWasUnderPlayer = match getTile board (x,y) with
+                                        | Some character when character = player -> floor 
+                                        | Some character when character = player_on_goal_square -> goal_square 
+                                        | _ -> failwith "Should not happen" 
+        let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer // must be smarter depending on what was there
         let horizontalMove = Δx <>0
         if horizontalMove then 
             let lineWithPlayerInNewPos = List.updateAt (x+Δx) player lineWithoutPlayer
