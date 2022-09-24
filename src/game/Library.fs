@@ -62,10 +62,8 @@ module game =
         let tileInNewPosition = getTile board attemptedNewPosition 
         match tileInNewPosition with
             | Some '#' -> false 
-            | Some '$' when not (canPushBox board (x,y) (Δx,Δy)) -> false 
-            | Some '$' when (canPushBox board (x,y) (Δx,Δy)) -> true 
-            | Some '*' when not (canPushBox board (x,y) (Δx,Δy)) -> false 
-            | Some '*' when (canPushBox board (x,y) (Δx,Δy)) -> true 
+            | Some '$' -> canPushBox board (x,y) (Δx,Δy)
+            | Some '*' -> canPushBox board (x,y) (Δx,Δy)
             | Some _ -> true
             | None -> false
         
