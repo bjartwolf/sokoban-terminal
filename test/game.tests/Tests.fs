@@ -178,7 +178,7 @@ let moveDown_PlayerPushBoxOnFloor_BoxAndPlayerMoves() =
  $"
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'h'
+    let newBoard = game.movePlayer board 'j'
     let positionAreEqual = (expectedNewPostition = newBoard)
     printfn "%A" (game.serializeBoard expectedNewPostition)
     printfn "%A" (game.serializeBoard newBoard)
