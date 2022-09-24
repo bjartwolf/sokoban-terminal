@@ -70,21 +70,23 @@ module game =
     let move (board: Board) ((Δx,Δy): int*int): Board = 
         let (x,y) = getPlayerPosition board
         let lineWithPlayer = board.[y] 
-        let whatWasUnderPlayer = match getTile board (x,y) with
-                                        | Some c when c = player -> floor 
-                                        | Some c when c = player_on_goal_square -> goal_square 
-                                        | _ -> failwith "Should not happen" 
-        let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
+        let tile = getTile board (x,y)
+        let tile' = getTile board (x+Δx,y+Δy)
 
-        let tileWithPlayerOnTop = match getTile board (x+Δx,y+Δy) with
-                                        | Some c when c = goal_square || c = box_on_goal_square -> player_on_goal_square 
-                                        | Some _ -> player 
-                                        | _ -> failwith "Should not happen" 
-        let isPushingBox =  match getTile board (x+Δx,y+Δy) with
+        let whatWasUnderPlayer = if tile = Some player then floor else goal_square
+
+        let tileWithPlayerOnTop = if tile' = Some goal_square || tile' = Some box_on_goal_square then
+                                     player_on_goal_square 
+                                  else 
+                                     player
+
+        let isPushingBox =  match tile' with
                                         | Some character when character = box || character = box_on_goal_square -> true 
                                         | _ -> false 
 
+
         let horizontalMove = Δx <>0
+        let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
         if horizontalMove then 
             let lineWithPlayerInNewPos = if isPushingBox then
                                             let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y) = Some goal_square 
