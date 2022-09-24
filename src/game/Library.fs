@@ -55,6 +55,7 @@ module game =
         let (x,y) = getPlayerPosition board
         let tile = getTile board (x+Δx,y+Δy)
         match tile with
+            | Some '#' -> false 
             | Some _ -> true
             | None -> false
         
