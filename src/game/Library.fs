@@ -2,6 +2,8 @@
 open System
 
 module game =
+    // y is first index , growing down on the board
+    // x is index in array, growing to the right 
     type Board = Map<(int*int),char> 
 
     let init (): String = 
@@ -87,8 +89,6 @@ module game =
         else 
             boardWithPlayerBack 
 
-    // y is first index , growing down on the board
-    // x is index in array, growing to the right 
     let movePlayer (board: Board) (keypress: Char): Board =
         let Δ = match keypress with
                                 | 'h' -> (-1,0) 
