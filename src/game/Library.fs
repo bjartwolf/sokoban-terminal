@@ -66,10 +66,16 @@ module game =
                                         | Some character when character = player -> floor 
                                         | Some character when character = player_on_goal_square -> goal_square 
                                         | _ -> failwith "Should not happen" 
-        let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer // must be smarter depending on what was there
+        let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
+
+        let tileWithPlayerOnTop = match getTile board (x+Δx,y+Δy) with
+                                        | Some character when character = goal_square -> player_on_goal_square 
+                                        | Some _ -> player 
+                                        | _ -> failwith "Should not happen" 
+ 
         let horizontalMove = Δx <>0
         if horizontalMove then 
-            let lineWithPlayerInNewPos = List.updateAt (x+Δx) player lineWithoutPlayer
+            let lineWithPlayerInNewPos = List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
