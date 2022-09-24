@@ -87,8 +87,10 @@ module game =
         let horizontalMove = Δx <>0
         if horizontalMove then 
             let lineWithPlayerInNewPos = if isPushingBox then
+                                            let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y) = Some goal_square 
+                                            let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
                                             List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
-                                            |> List.updateAt (x+2*Δx) box 
+                                            |> List.updateAt (x+2*Δx) boxTile 
                                          else
                                             List.updateAt (x+Δx) tileWithPlayerOnTop lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
