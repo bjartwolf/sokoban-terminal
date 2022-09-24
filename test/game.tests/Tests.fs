@@ -45,24 +45,24 @@ let getPlayerPosition_OnlyPlayer_00 () =
     let board = game.parseBoard("@")
     Assert.True((0,0) = game.getPlayerPosition board)
 
-//[<Fact>]
-//let getPlayerPosition_initial_board () =
-//    let board = game.parseBoard(game.init())
-//    Assert.True((6,4) = game.getPlayerPosition board)
+[<Fact>]
+let getPlayerPosition_initial_board () =
+    let board = game.parseBoard(game.init())
+    Assert.True((6,4) = game.getPlayerPosition board)
 
-//[<Fact>]
-//let moveLeft_PlayerCanMove_PlayerMovesLeft () =
-//    let boardBefore = @"
+[<Fact>]
+let moveLeft_PlayerCanMove_PlayerMovesLeft () =
+    let boardBefore = @"
    
-// @"
-//    let boardAfter = @"
+ @"
+    let boardAfter = @"
    
-//@ "
-//    let board = game.parseBoard(boardBefore)
-//    let expectedNewPostition = game.parseBoard(boardAfter) 
-//    let newBoard = game.movePlayer board 'h'
-//    let positionAreEqual =  (expectedNewPostition = newBoard)
-//    Assert.True(positionAreEqual) 
+@ "
+    let board = game.parseBoard(boardBefore)
+    let expectedNewPostition = game.parseBoard(boardAfter) 
+    let newBoard = game.movePlayer board 'h'
+    let positionAreEqual =  (expectedNewPostition = newBoard)
+    Assert.True(positionAreEqual) 
 
 //[<Fact>]
 //let moveRight_OutOfBounds_NothingChanges() =
