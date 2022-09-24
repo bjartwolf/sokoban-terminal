@@ -56,7 +56,8 @@ module game =
                                 | _ -> failwith "not a valid move" 
         let lineWithPlayer = board.[y] 
         let lineWithoutPlayer = List.updateAt x floor lineWithPlayer // must be smarter depending on what was there
-        if (Δx <>0 ) then 
+        let horizontalMove = Δx <>0
+        if horizontalMove then 
             let lineWithPlayerInNewPos = List.updateAt (x+Δx) player lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
