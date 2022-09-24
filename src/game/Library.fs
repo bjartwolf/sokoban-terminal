@@ -2,7 +2,7 @@
 open System
 
 module game =
-    type Board = char list list
+    type Board = Map<(int*int),char> 
 
     let init (): String = 
         let board = @"
@@ -34,19 +34,20 @@ module game =
 
     let parseBoard (board:string): Board = 
         board.Split(Environment.NewLine) 
-            |> Array.toList 
-            |> List.map (fun l -> l.ToCharArray() |> Array.toList)
-            |> List.filter (fun l -> l <> [])
+                |> Array.toList 
+                |> List.map (fun l -> l.ToCharArray() |> Array.toList)
+                |> List.filter (fun l -> l <> [])
+                |> List.mapi (fun y e -> (y,e))
+                |> List.map (fun (y,e) -> e |> List.mapi (fun x c -> (x,y),c))
+                |> List.collect (id)
+                |> Map
 
     let getPlayerPosition (board: Board): int*int =
-        let whichLine = List.findIndex (fun l -> List.contains player l || List.contains player_on_goal_square l) board
-        let lineWithPlayer = board.[whichLine]
-        let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player || pos = player_on_goal_square)
-        (playerPosition, whichLine) 
+          board |> Map.filter (fun _ t -> t=player || t=player_on_goal_square )|> Map.keys |> Seq.head 
 
-    let getTile (board: Board) ((x,y): int*int): Char option =
+    let getTile (board: Board) (pos: int*int): Char option =
         try
-            let piece = board.[y].[x]  
+            let piece = board.[pos]
             Some piece
         with
             | _ -> None
@@ -68,6 +69,7 @@ module game =
         
     let move (board: Board) ((Δx,Δy): int*int): Board = 
         let (x,y) = getPlayerPosition board
+        let pos' = x+Δx,y+Δy
         let tile = getTile board (x,y)
         let tile_Δ = getTile board (x+Δx,y+Δy)
 
@@ -79,30 +81,16 @@ module game =
 
         let isPushingBox =  tile_Δ = Some box || tile_Δ = Some box_on_goal_square 
 
-        let horizontalMove = Δx <>0
-
         let whatWasUnderPlayer = if tile = Some player then floor else goal_square
-        let lineWithPlayer = board.[y] 
-        let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
-        let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y+2*Δy) = Some goal_square 
+        let boardWithoutPlayer = board |> Map.add (x,y) whatWasUnderPlayer
+        let boardWithPlayerBack = boardWithoutPlayer |> Map.add pos' tile_Δ'
 
-        if horizontalMove then 
-            let lineWithPlayerInNewPos = if isPushingBox then
-                                            let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
-                                            List.updateAt (x+Δx) tile_Δ' lineWithoutPlayer
-                                            |> List.updateAt (x+2*Δx) boxTile 
-                                         else
-                                            List.updateAt (x+Δx) tile_Δ' lineWithoutPlayer
-            board |> List.updateAt y lineWithPlayerInNewPos 
-        else
-            let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
-            if (isPushingBox) then 
-                let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
-                let lineWithBox = board.[y+2*Δy] |> List.updateAt x boxTile 
-                board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
-                      |> List.updateAt (y+2*Δy) lineWithBox 
-            else
-                board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
+        if isPushingBox then 
+            let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y+2*Δy) = Some goal_square 
+            let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
+            boardWithPlayerBack |> Map.add (x+2*Δx,y+2*Δy) boxTile
+        else 
+            boardWithPlayerBack 
 
     // y is first index , growing down on the board
     // x is index in array, growing to the right 
@@ -119,8 +107,12 @@ module game =
             board
 
     let serializeBoard (board: Board) : string =
-        let foo = board |> List.map (fun f -> new String (f |> List.toArray))
-        foo |> String.concat Environment.NewLine 
+        board |> Map.toList  
+              |> List.groupBy (fun ((_,y),_) -> y) 
+              |> List.map (snd) |> List.map (List.map (snd)) 
+              |> List.map (Array.ofList)
+              |> List.map (String)
+              |> String.concat Environment.NewLine
 
     let makeMove(board: string, move: Char) = 
         let board = parseBoard board

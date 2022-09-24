@@ -18,11 +18,15 @@ let ``Parse and serialize returns same board except the annoying first newline``
 [<Fact>]
 let parse_wall_returns_wall () = 
     let board = "#"
-    Assert.True([['#']] =  game.parseBoard(board))
+    let expectedBoard = Map<int*int,Char> ([(0,0),'#'])
+    let boardsAreEqual = expectedBoard =  game.parseBoard(board)
+    Assert.True(boardsAreEqual)
 
 [<Fact>]
 let parse_character_returns_character () = 
-    Assert.True([['@']] =  game.parseBoard("@"))
+    let expectedBoard = Map<int*int,Char> ([(0,0),'@'])
+    let boardsAreEqual = expectedBoard =  game.parseBoard("@")
+    Assert.True(boardsAreEqual)
 
 [<Fact>]
 let parse_empty_string_returns_empty_board () = 
@@ -32,9 +36,9 @@ let parse_empty_string_returns_empty_board () =
 [<Fact>]
 let parseBoards () =  
     let board = game.parseBoard(game.init())
-    Assert.True('#' = board.Head.Head) 
-    Assert.True(9 = board.Length)
-    Assert.True(4 = board.Head.Length)
+    Assert.True('#' = board.[(0,0)]) 
+    Assert.True(9 = (board |> Map.filter (fun (x,y) t -> x = 0) |> Map.toList |> List.length))
+    Assert.True(4 = (board |> Map.filter (fun (x,y) t -> y = 0) |> Map.toList |> List.length))
 
 [<Fact>]
 let getPlayerPosition_OnlyPlayer_00 () =
