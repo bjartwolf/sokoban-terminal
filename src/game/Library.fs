@@ -82,35 +82,16 @@ module game =
 
         let isPushingBox =  tile_Δ = Some box || tile_Δ = Some box_on_goal_square 
 
-        let horizontalMove = Δx <>0
-
         let whatWasUnderPlayer = if tile = Some player then floor else goal_square
-        // subsitute player for what was there earlier
         let boardWithoutPlayer = board |> Map.add (x,y) whatWasUnderPlayer
-
         let boardWithPlayerBack = boardWithoutPlayer |> Map.add pos' tile_Δ'
-        boardWithPlayerBack 
-        //let lineWithPlayer = board.[y] 
-        //let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
-        //let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y+2*Δy) = Some goal_square 
 
-        //if horizontalMove then 
-        //    let lineWithPlayerInNewPos = if isPushingBox then
-        //                                    let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
-        //                                    List.updateAt (x+Δx) tile_Δ' lineWithoutPlayer
-        //                                    |> List.updateAt (x+2*Δx) boxTile 
-        //                                 else
-        //                                    List.updateAt (x+Δx) tile_Δ' lineWithoutPlayer
-        //    board |> List.updateAt y lineWithPlayerInNewPos 
-        //else
-        //    let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
-        //    if (isPushingBox) then 
-        //        let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
-        //        let lineWithBox = board.[y+2*Δy] |> List.updateAt x boxTile 
-        //        board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
-        //              |> List.updateAt (y+2*Δy) lineWithBox 
-        //    else
-        //        board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
+        if isPushingBox then 
+            let isBoxPushedOnGoalSquare = getTile board (x+2*Δx,y+2*Δy) = Some goal_square 
+            let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
+            boardWithPlayerBack |> Map.add (x+2*Δx,y+2*Δy) boxTile
+        else 
+            boardWithPlayerBack 
 
     // y is first index , growing down on the board
     // x is index in array, growing to the right 
@@ -134,7 +115,7 @@ module game =
         let foobaz = foobar |> String.concat Environment.NewLine
         foobaz
 
-    //let makeMove(board: string, move: Char) = 
-    //    let board = parseBoard board
-    //    let newBoard = movePlayer board move
-    //    serializeBoard newBoard
+    let makeMove(board: string, move: Char) = 
+        let board = parseBoard board
+        let newBoard = movePlayer board move
+        serializeBoard newBoard

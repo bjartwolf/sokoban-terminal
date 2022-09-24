@@ -44,7 +44,7 @@ void KeyPress(View.KeyEventEventArgs obj)
     if (keypress == Key.h || keypress == Key.j || keypress == Key.k || keypress == Key.l)
     {
         var character = keypress.ToString().ToCharArray()[0];
-        //board = sokoban.game.makeMove(board, character);
+        board = sokoban.game.makeMove(board, character);
         gameWindow.Text = board;
 
     }
