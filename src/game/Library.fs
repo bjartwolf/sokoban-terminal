@@ -53,7 +53,7 @@ module game =
 
     let canPushBox (board: Board) ((x,y): int*int) ((Δx,Δy): int*int): bool = 
         let tileBehindBox = getTile board (x+2*Δx, y+2*Δy)
-        let isFloorBehindBox = tileBehindBox = Some floor 
+        let isFloorBehindBox = tileBehindBox = Some floor || tileBehindBox = Some goal_square 
         isFloorBehindBox 
 
     let legalMove (board: Board) ((Δx,Δy): int*int): bool = 
@@ -95,7 +95,9 @@ module game =
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
             if (isPushingBox) then 
-                let lineWithBox = board.[y+2*Δy] |> List.updateAt x box 
+                let isBoxPushedOnGoalSquare = getTile board (x,y+2*Δy) = Some goal_square 
+                let boxTile = if isBoxPushedOnGoalSquare then box_on_goal_square else box
+                let lineWithBox = board.[y+2*Δy] |> List.updateAt x boxTile 
                 board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
                       |> List.updateAt (y+2*Δy) lineWithBox 
             else
