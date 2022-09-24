@@ -61,8 +61,8 @@ module game =
         let attemptedNewPosition = x+Δx,y+Δy
         let tileInNewPosition = getTile board attemptedNewPosition 
         match tileInNewPosition with
-            | Some '#' -> false 
-            | Some '$' | Some '*' -> canPushBox board (x,y) (Δx,Δy)
+            | Some c when c = wall -> false 
+            | Some c when c = box || c = box_on_goal_square -> canPushBox board (x,y) (Δx,Δy)
             | Some _ -> true
             | None -> false
         
@@ -70,13 +70,13 @@ module game =
         let (x,y) = getPlayerPosition board
         let lineWithPlayer = board.[y] 
         let whatWasUnderPlayer = match getTile board (x,y) with
-                                        | Some character when character = player -> floor 
-                                        | Some character when character = player_on_goal_square -> goal_square 
+                                        | Some c when c = player -> floor 
+                                        | Some c when c = player_on_goal_square -> goal_square 
                                         | _ -> failwith "Should not happen" 
         let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
 
         let tileWithPlayerOnTop = match getTile board (x+Δx,y+Δy) with
-                                        | Some character when character = goal_square || character = box_on_goal_square -> player_on_goal_square 
+                                        | Some c when c = goal_square || c = box_on_goal_square -> player_on_goal_square 
                                         | Some _ -> player 
                                         | _ -> failwith "Should not happen" 
         let isPushingBox =  match getTile board (x+Δx,y+Δy) with
