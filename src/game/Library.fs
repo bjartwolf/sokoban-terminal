@@ -33,13 +33,15 @@ module game =
     let keypress_right = 'l'
 
     let parseBoard (board:string): Board = 
-        board.Split(Environment.NewLine) 
-            |> Array.toList 
-            |> List.map (fun l -> l.ToCharArray() |> Array.toList)
-            |> List.filter (fun l -> l <> [])
-            |> List.mapi (fun y e -> (y,e))
-            |> List.mapi (fun x (y,e) -> ((x,y),e.Head))
-            |> Map
+        let a = board.Split(Environment.NewLine) 
+                |> Array.toList 
+                |> List.map (fun l -> l.ToCharArray() |> Array.toList)
+                |> List.filter (fun l -> l <> [])
+
+        let b = a |> List.mapi (fun y e -> (y,e))
+        let c = b |> List.map (fun (y,e) -> e |> List.mapi (fun x c -> (x,y),c))
+                  |> List.collect (id)
+        c |> Map
 
     //let getPlayerPosition (board: Board): int*int =
     //    let whichLine = List.findIndex (fun l -> List.contains player l || List.contains player_on_goal_square l) board
@@ -121,9 +123,13 @@ module game =
     //    else 
     //        board
 
-    //let serializeBoard (board: Board) : string =
-    //    let foo = board |> List.map (fun f -> new String (f |> List.toArray))
-    //    foo |> String.concat Environment.NewLine 
+    let serializeBoard (board: Board) : string =
+        let foo = board |> Map.toList  |> List.groupBy (fun ((_,y),_) -> y) 
+        let bar = foo |> List.map (snd) |> List.map (List.map (snd)) 
+        let baz = bar |> List.map (Array.ofList)
+        let foobar = baz |> List.map (String)
+        let foobaz = foobar |> String.concat Environment.NewLine
+        foobaz
 
     //let makeMove(board: string, move: Char) = 
     //    let board = parseBoard board
