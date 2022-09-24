@@ -57,7 +57,6 @@ module game =
         let lineWithPlayer = board.[y] 
         let lineWithoutPlayer = List.updateAt x floor lineWithPlayer // must be smarter depending on what was there
         if (Δx <>0 ) then 
-            let lineWithoutPlayer = List.updateAt x floor lineWithPlayer
             let lineWithPlayerInNewPos = List.updateAt (x+Δx) player lineWithoutPlayer
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
