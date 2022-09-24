@@ -45,7 +45,10 @@ module game =
         (whichLine, playerPosition) 
 
     let legalMove (board: Board) (move: int*int): bool = 
-        true
+        if move = (1,0) then
+            false
+        else 
+            true
 
         
     let move (board: Board) ((Δx,Δy): int*int): Board = 
