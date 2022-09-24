@@ -53,9 +53,11 @@ module game =
 
     let legalMove (board: Board) ((Δx,Δy): int*int): bool = 
         let (x,y) = getPlayerPosition board
-        let tile = getTile board (x+Δx,y+Δy)
-        match tile with
+        let attemptedNewPosition = x+Δx,y+Δy
+        let tileInNewPosition = getTile board attemptedNewPosition 
+        match tileInNewPosition with
             | Some '#' -> false 
+            | Some '$' -> false 
             | Some _ -> true
             | None -> false
         
