@@ -56,11 +56,12 @@ module game =
         let isFloorBehindBox = tileBehindBox = Some floor || tileBehindBox = Some goal_square 
         isFloorBehindBox 
 
-    let legalMove (board: Board) ((Δx,Δy): int*int): bool = 
+    let legalMove (board: Board) (Δ: int*int): bool = 
+        let (Δx,Δy) = Δ
         let (x,y) = getPlayerPosition board
-        let attemptedNewPosition = x+Δx,y+Δy
-        let tileInNewPosition = getTile board attemptedNewPosition 
-        match tileInNewPosition with
+        let pos' = x+Δx,y+Δy
+        let t' = getTile board pos' 
+        match t' with
             | Some c when c = wall -> false 
             | Some c when c = box || c = box_on_goal_square -> canPushBox board (x,y) (Δx,Δy)
             | Some _ -> true
