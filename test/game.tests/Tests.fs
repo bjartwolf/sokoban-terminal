@@ -33,12 +33,12 @@ let parse_empty_string_returns_empty_board () =
     let board = game.parseBoard("")
     Assert.True(board.IsEmpty)
 
-//[<Fact>]
-//let parseBoards () =  
-//    let board = game.parseBoard(game.init())
-//    Assert.True('#' = board.Head.Head) 
-//    Assert.True(9 = board.Length)
-//    Assert.True(4 = board.Head.Length)
+[<Fact>]
+let parseBoards () =  
+    let board = game.parseBoard(game.init())
+    Assert.True('#' = board.[(0,0)]) 
+    Assert.True(9 = (board |> Map.filter (fun (x,y) t -> x = 0) |> Map.toList |> List.length))
+    Assert.True(4 = (board |> Map.filter (fun (x,y) t -> y = 0) |> Map.toList |> List.length))
 
 //[<Fact>]
 //let getPlayerPosition_OnlyPlayer_00 () =
