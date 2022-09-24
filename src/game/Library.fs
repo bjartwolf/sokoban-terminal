@@ -33,11 +33,13 @@ module game =
     let keypress_right = 'l'
 
     let parseBoard (board:string): Board = 
-        Map<int*int,Char> ([(0,0),'#'])
-        //board.Split(Environment.NewLine) 
-        //    |> Array.toList 
-        //    |> List.map (fun l -> l.ToCharArray() |> Array.toList)
-        //    |> List.filter (fun l -> l <> [])
+        board.Split(Environment.NewLine) 
+            |> Array.toList 
+            |> List.map (fun l -> l.ToCharArray() |> Array.toList)
+            |> List.filter (fun l -> l <> [])
+            |> List.mapi (fun y e -> (y,e))
+            |> List.mapi (fun x (y,e) -> ((x,y),e.Head))
+            |> Map
 
     //let getPlayerPosition (board: Board): int*int =
     //    let whichLine = List.findIndex (fun l -> List.contains player l || List.contains player_on_goal_square l) board

@@ -22,14 +22,16 @@ let parse_wall_returns_wall () =
     let boardsAreEqual = expectedBoard =  game.parseBoard(board)
     Assert.True(boardsAreEqual)
 
-//[<Fact>]
-//let parse_character_returns_character () = 
-//    Assert.True([['@']] =  game.parseBoard("@"))
+[<Fact>]
+let parse_character_returns_character () = 
+    let expectedBoard = Map<int*int,Char> ([(0,0),'@'])
+    let boardsAreEqual = expectedBoard =  game.parseBoard("@")
+    Assert.True(boardsAreEqual)
 
-//[<Fact>]
-//let parse_empty_string_returns_empty_board () = 
-//    let board = game.parseBoard("")
-//    Assert.True(board.IsEmpty)
+[<Fact>]
+let parse_empty_string_returns_empty_board () = 
+    let board = game.parseBoard("")
+    Assert.True(board.IsEmpty)
 
 //[<Fact>]
 //let parseBoards () =  
