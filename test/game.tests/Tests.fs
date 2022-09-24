@@ -109,3 +109,18 @@ let moveUp_PlayerCanMove_PlayerMovesUp () =
     let positionAreEqual =  (expectedNewPostition = newBoard)
     Assert.True(positionAreEqual) 
 
+[<Fact>]
+let moveLeft_PlayerIsOnGoalSquare_PlayerMovesLeft () =
+    let boardBefore = @"
+   
+ +"
+    let boardAfter = @"
+   
+@. "
+    let board = game.parseBoard(boardBefore)
+    let expectedNewPostition = game.parseBoard(boardAfter) 
+    let newBoard = game.movePlayer board 'h'
+    let positionAreEqual =  (expectedNewPostition = newBoard)
+    Assert.True(positionAreEqual) 
+
+
