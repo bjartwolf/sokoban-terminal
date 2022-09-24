@@ -94,7 +94,10 @@ module game =
             board |> List.updateAt y lineWithPlayerInNewPos 
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
-            board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
+            if (isPushingBox) then 
+                board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
+            else
+                board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
 
     // y is first index , growing down on the board
     // x is index in array, growing to the right 
