@@ -77,11 +77,11 @@ module game =
         let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
 
         let tileWithPlayerOnTop = match getTile board (x+Δx,y+Δy) with
-                                        | Some character when character = goal_square -> player_on_goal_square 
+                                        | Some character when character = goal_square || character = box_on_goal_square -> player_on_goal_square 
                                         | Some _ -> player 
                                         | _ -> failwith "Should not happen" 
         let isPushingBox =  match getTile board (x+Δx,y+Δy) with
-                                        | Some character when character = box -> true 
+                                        | Some character when character = box || character = box_on_goal_square -> true 
                                         | _ -> false 
 
         let horizontalMove = Δx <>0
