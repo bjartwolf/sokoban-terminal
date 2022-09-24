@@ -42,7 +42,7 @@ module game =
         let whichLine = List.findIndex (fun l -> l |> List.contains player) board
         let lineWithPlayer = board.[whichLine]
         let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player)
-        (whichLine, playerPosition) 
+        (playerPosition, whichLine) 
 
     let getTile (board: Board) ((x,y): int*int): Char option =
         try
@@ -52,14 +52,14 @@ module game =
             | _ -> None
 
     let legalMove (board: Board) ((Δx,Δy): int*int): bool = 
-        let (y,x) = getPlayerPosition board
+        let (x,y) = getPlayerPosition board
         let tile = getTile board (x+Δx,y+Δy)
         match tile with
             | Some _ -> true
             | None -> false
         
     let move (board: Board) ((Δx,Δy): int*int): Board = 
-        let (y,x) = getPlayerPosition board
+        let (x,y) = getPlayerPosition board
         let lineWithPlayer = board.[y] 
         let lineWithoutPlayer = List.updateAt x floor lineWithPlayer // must be smarter depending on what was there
         let horizontalMove = Δx <>0

@@ -44,7 +44,7 @@ let getPlayerPosition_OnlyPlayer_00 () =
 [<Fact>]
 let getPlayerPosition_initial_board () =
     let board = game.parseBoard(game.init())
-    Assert.True((4,6) = game.getPlayerPosition board)
+    Assert.True((6,4) = game.getPlayerPosition board)
 
 [<Fact>]
 let moveLeft_PlayerCanMove_PlayerMovesLeft () =
