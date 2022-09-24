@@ -43,17 +43,13 @@ module game =
         let lineWithPlayer = board.[whichLine]
         let playerPosition = lineWithPlayer |> List.findIndex (fun pos -> pos = player)
         (whichLine, playerPosition) 
+
+    let legalMove (board: Board) (move: int*int): bool = 
+        true
+
         
-    // y is first index , growing down on the board
-    // x is index in array, growing to the right 
-    let movePlayer (board: Board) (move: Char): Board =
+    let move (board: Board) ((Δx,Δy): int*int): Board = 
         let (y,x) = getPlayerPosition board
-        let (Δx,Δy)= match move with
-                                | 'h' -> (-1,0) 
-                                | 'j' -> (0,1) 
-                                | 'l' -> (1,0) 
-                                | 'k' -> (0,-1) 
-                                | _ -> failwith "not a valid move" 
         let lineWithPlayer = board.[y] 
         let lineWithoutPlayer = List.updateAt x floor lineWithPlayer // must be smarter depending on what was there
         let horizontalMove = Δx <>0
@@ -63,13 +59,26 @@ module game =
         else
             let newLineWithPlayer = board.[y+Δy] |> List.updateAt x player 
             board |> List.updateAt y lineWithoutPlayer |> List.updateAt (y+Δy) newLineWithPlayer
-        
+
+    // y is first index , growing down on the board
+    // x is index in array, growing to the right 
+    let movePlayer (board: Board) (keypress: Char): Board =
+        let Δ = match keypress with
+                                | 'h' -> (-1,0) 
+                                | 'j' -> (0,1) 
+                                | 'l' -> (1,0) 
+                                | 'k' -> (0,-1) 
+                                | _ -> failwith "not a valid move" 
+        if (legalMove board Δ) then
+            move board Δ
+        else 
+            board
 
     let serializeBoard (board: Board) : string =
         let foo = board |> List.map (fun f -> new String (f |> List.toArray))
         foo |> String.concat Environment.NewLine 
 
-    let makeMove (board: string, move: Char) = 
+    let makeMove(board: string, move: Char) = 
         let board = parseBoard board
         let newBoard = movePlayer board move
         serializeBoard newBoard
