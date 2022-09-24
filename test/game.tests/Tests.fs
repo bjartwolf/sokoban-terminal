@@ -151,4 +151,20 @@ let moveDown_PlayerTriesToPushBoxOnWall_NothingChanges() =
     let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
 
+[<Fact>]
+let moveDown_PlayerPushBoxOnFloor_BoxAndPlayerMoves() =
+    let boardBefore = @"
+ @ 
+ $ 
+  "
+    let boardAfter= @"
+   
+ @ 
+ $"
+    let board = game.parseBoard(boardBefore)
+    let expectedNewPostition = game.parseBoard(boardAfter) 
+    let newBoard = game.movePlayer board 'h'
+    let positionAreEqual = (expectedNewPostition = newBoard)
+    Assert.True(positionAreEqual) 
+
 
