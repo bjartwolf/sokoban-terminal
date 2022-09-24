@@ -64,6 +64,8 @@ module game =
             | Some '#' -> false 
             | Some '$' when not (canPushBox board (x,y) (Δx,Δy)) -> false 
             | Some '$' when (canPushBox board (x,y) (Δx,Δy)) -> true 
+            | Some '*' when not (canPushBox board (x,y) (Δx,Δy)) -> false 
+            | Some '*' when (canPushBox board (x,y) (Δx,Δy)) -> true 
             | Some _ -> true
             | None -> false
         

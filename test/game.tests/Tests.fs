@@ -227,8 +227,21 @@ let moveLeft_PlayerPushBoxFromGoalSquareToGoalSquare_BoxAndPlayerMovesAndBoxIsOn
     let expectedNewPostition = game.parseBoard(boardAfter) 
     let newBoard = game.movePlayer board 'l'
     let positionAreEqual = (expectedNewPostition = newBoard)
-    printfn "%A" (game.serializeBoard expectedNewPostition)
+    //printfn "%A" (game.serializeBoard expectedNewPostition)
+    //printfn "%A" (game.serializeBoard newBoard)
+    Assert.True(positionAreEqual) 
+
+[<Fact>]
+let moveDown_PlayerTriesToPushBoxGoalSquareOnWall_NothingChanges() =
+    let boardBefore = @"
+ @ 
+ * 
+ #"
+    let board = game.parseBoard(boardBefore)
+
+    let newBoard = game.movePlayer board 'j'
     printfn "%A" (game.serializeBoard newBoard)
+    let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
 
 
