@@ -80,10 +80,7 @@ module game =
                                   else 
                                      player
 
-        let isPushingBox =  match tile' with
-                                        | Some character when character = box || character = box_on_goal_square -> true 
-                                        | _ -> false 
-
+        let isPushingBox =  tile' = Some box || tile' = Some box_on_goal_square 
 
         let horizontalMove = Δx <>0
         let lineWithoutPlayer = List.updateAt x whatWasUnderPlayer lineWithPlayer
