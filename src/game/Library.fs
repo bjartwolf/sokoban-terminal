@@ -34,7 +34,6 @@ module game =
     let keypress_up = 'k'
     let keypress_right = 'l'
 
-    // TODO: Simplify internals.  
     let parseBoard (board:string): Board = 
         board.Split(Environment.NewLine) 
             |> Array.toList
