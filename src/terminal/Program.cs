@@ -31,12 +31,16 @@ static bool Quit()
 
 
 
-var board = sokoban.game.init(0);
+var boardnr = 3;
+var board = sokoban.game.startNewBoard(boardnr);
 
+var history = String.Empty; 
 var help = new Label(3, 3, "Press h,j,k,l to move, r to reset, 0-5 to change board.");
+var historyWindow = new Label(3, 4, history);
 var gameWindow = new Label(10, 10, board);
 
 win.Add( help);
+win.Add( historyWindow);
 win.Add( gameWindow);
 win.KeyDown += KeyPress;
 
@@ -57,13 +61,16 @@ void KeyPress(View.KeyEventEventArgs obj)
         };
         if (keypress is Key.r)
         {
-            board = sokoban.game.init(3);
+//            board = sokoban.game.init(3);
+            history = "";
+            board = sokoban.game.startNewBoard(boardnr);
         }
         else
         {
-            board = sokoban.game.makeMove(board, move.First());
+            (board,history) = sokoban.game.attemptMove(boardnr,history, move.First());
         }
         gameWindow.Text = board;
+        historyWindow.Text = history;
 
     }
 }

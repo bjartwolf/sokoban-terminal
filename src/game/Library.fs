@@ -160,7 +160,7 @@ module game =
         let history' =  history + match moveMade with 
                                     | Some move -> move.ToString()
                                     | None -> ""
-        allKnownBoards <- allKnownBoards.Add( (boardnr,history'),board)
+        allKnownBoards <- allKnownBoards.Add( (boardnr,history'),newBoard)
         (serializeBoard newBoard, history')
 
 
