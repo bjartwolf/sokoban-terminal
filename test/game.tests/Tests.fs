@@ -268,6 +268,18 @@ let board3_playermovesdowntwice_nothingChanges() =
     let isHistoryEqual = history2 = "dd"
     Assert.True(isHistoryEqual) 
 
+[<Fact>]
+let board0_udrr_winsgame() =
+    let gameNr = 0
+    let _ = game.startNewBoard(gameNr)
+    let _,history1 = game.attemptMove(gameNr,"",'u') 
+    let _,history2 = game.attemptMove(gameNr,history1,'d') 
+    let _,history3 = game.attemptMove(gameNr,history2,'r') 
+    let finalState,history4 = game.attemptMove(gameNr,history3,'r') 
+    let isHistoryEqual = history4 = "udrr"
+    Assert.True(isHistoryEqual) 
+    Assert.True(finalState.Contains("You win")) 
+
 
 
 
