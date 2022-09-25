@@ -148,6 +148,9 @@ module game =
         allKnownBoards <- allKnownBoards.Add( (boardnr,""),board)
         serializeBoard board 
 
+    let wonGame (board: Board): bool =
+        not (board.Values.Contains(goal_square)) && not (board.Values.Contains(player_on_goal_square))
+
     let attemptMove(boardnr: int, history: string, move: Char): (string*string) = 
         // lookup board from history (it should be there, how else can we actually play?)
         // it could have some fancy feature to re-build the solution, as someone could ofcourse start
@@ -159,9 +162,15 @@ module game =
                                     "" 
                                  else 
                                     history.Remove(history.Length-1) 
-
             let board = allKnownBoards[(boardnr, history_undoed)]
-            (serializeBoard board, history_undoed)
+            if (wonGame board) then
+                let winnerBoard = board  
+                                    |> Map.add (1,0) 'W' 
+                                    |> Map.add (2,0) 'I' 
+                                    |> Map.add (3,0) 'N'
+                (serializeBoard winnerBoard, history_undoed)
+            else 
+                (serializeBoard board, history_undoed)
         else 
             let board = allKnownBoards[(boardnr, history)]
             let (newBoard, moveMade) = movePlayer board move
@@ -170,6 +179,13 @@ module game =
                                         | Some move -> move.ToString()
                                         | None -> ""
             allKnownBoards <- allKnownBoards.Add( (boardnr,history'),newBoard)
-            (serializeBoard newBoard, history')
+            if (wonGame newBoard) then
+                let winnerBoard = newBoard 
+                                    |> Map.add (1,0) 'W' 
+                                    |> Map.add (2,0) 'I' 
+                                    |> Map.add (3,0) 'N'
+                (serializeBoard winnerBoard, history')
+            else 
+                (serializeBoard newBoard, history')
 
 

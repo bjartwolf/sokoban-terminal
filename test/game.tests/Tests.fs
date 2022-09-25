@@ -278,8 +278,18 @@ let board0_udrr_winsgame() =
     let finalState,history4 = game.attemptMove(gameNr,history3,'r') 
     let isHistoryEqual = history4 = "udrr"
     Assert.True(isHistoryEqual) 
-    Assert.True(finalState.Contains("You win")) 
+    Assert.True(finalState.Contains("WIN")) 
 
 
+[<Fact>]
+let board0_udr_downotwinsgame() =
+    let gameNr = 0
+    let _ = game.startNewBoard(gameNr)
+    let _,history1 = game.attemptMove(gameNr,"",'u') 
+    let _,history2 = game.attemptMove(gameNr,history1,'d') 
+    let finalState ,history3 = game.attemptMove(gameNr,history2,'r') 
+    let isHistoryEqual = history3 = "udr"
+    Assert.True(isHistoryEqual) 
+    Assert.True(not (finalState.Contains("WIN"))) 
 
 
