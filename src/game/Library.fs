@@ -111,7 +111,7 @@ module game =
         else 
             boardWithPlayerBack 
 
-    let movePlayer (board: Board) (keypress: Char): Board =
+    let movePlayer (board: Board) (keypress: Char): (Board * Char option) =
         let Δ = match keypress with
                                 | 'l' -> (-1,0) 
                                 | 'd' -> (0,1) 
@@ -119,9 +119,9 @@ module game =
                                 | 'u' -> (0,-1) 
                                 | _ -> failwith "There are only four known directions." 
         if (legalMove board Δ) then
-            move board Δ
+            (move board Δ, Some keypress)
         else 
-            board
+            (board, None)
 
     let serializeBoard (board: Board) : string =
         board |> Map.toList  
@@ -135,7 +135,7 @@ module game =
     // moves and a new move and returns the serialized board and the set of moves.
     let makeMove(board: string, move: Char) = 
         let board = parseBoard board
-        let newBoard = movePlayer board move
+        let (newBoard,_) = movePlayer board move
         serializeBoard newBoard
 
 
