@@ -31,7 +31,7 @@ static bool Quit()
 
 
 
-var board = sokoban.game.init();
+var board = sokoban.game.init(3);
 
 var gameWindow = new Label(3, 3, board);
 

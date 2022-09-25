@@ -6,11 +6,11 @@ open Xunit
 
 [<Fact>]
 let ``Game is not blank`` () =
-    Assert.True(game.init().Length > 4)
+    Assert.True(game.init(1).Length > 4)
 
 [<Fact>]
 let ``Parse and serialize returns same board except the annoying first newline`` () =
-    let initialBoard = game.init()
+    let initialBoard = game.init(3)
     let board = game.parseBoard(initialBoard)
     let serializedBoard = game.serializeBoard board
     Assert.True(String.Equals(initialBoard, serializedBoard)) 
@@ -47,7 +47,7 @@ let getPlayerPosition_OnlyPlayer_00 () =
 
 [<Fact>]
 let getPlayerPosition_initial_board () =
-    let board = game.parseBoard(game.init())
+    let board = game.parseBoard(game.init(3))
     Assert.True((6,4) = game.getPlayerPosition board)
 
 [<Fact>]

@@ -6,19 +6,23 @@ module game =
     // x is index in array, growing to the right 
     type Board = Map<(int*int),char> 
 
-    let init (): String = 
-        let board = @"
+    let init (board_nr:int): String = 
+        let board3 = @"
 ####
 #  #######
 #  ......#
 #  ##### #
 ##   $@# #
-#  $$$$ #
-##  $ ###
-#    #
-######" 
+ #  $$$$ #
+ ##  $ ###
+  #    #
+  ######" 
+        let board: string = match board_nr with
+                                | 3 -> board3 
+                                | _ -> "I don't have that"
         let removeFirstNewline = board |> Seq.skip (Environment.NewLine.Length) |> Seq.toArray
         String(removeFirstNewline)
+
 
     // http://www.sokobano.de/wiki/index.php?title=Level_format
     let wall = '#'
