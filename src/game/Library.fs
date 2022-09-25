@@ -19,7 +19,7 @@ module game =
   ######" 
         let board: string = match board_nr with
                                 | 3 -> board3 
-                                | _ -> "I don't have that"
+                                | _ -> failwith "I don't have that"
         let removeFirstNewline = board |> Seq.skip (Environment.NewLine.Length) |> Seq.toArray
         String(removeFirstNewline)
 
