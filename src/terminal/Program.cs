@@ -59,7 +59,8 @@ void KeyPress(View.KeyEventEventArgs obj)
             {
                 Key.D0 => 0,
                 Key.D1 => 1,
-                Key.D3 => 3
+                Key.D3 => 3,
+                _ => throw new ArgumentOutOfRangeException($"No such key is configured...")
             };
             board = sokoban.game.startNewBoard(boardNr);
         }
