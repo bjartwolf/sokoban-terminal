@@ -33,10 +33,10 @@ module game =
     let goal_square = '.'
     let floor = ' '
 
-    let keypress_left = 'h'
-    let keypress_down = 'j'
-    let keypress_up = 'k'
-    let keypress_right = 'l'
+    let keypress_left = 'l'
+    let keypress_down = 'd'
+    let keypress_up = 'u'
+    let keypress_right = 'r'
 
     let parseBoard (board:string): Board = 
         board.Split(Environment.NewLine) 
@@ -95,11 +95,11 @@ module game =
 
     let movePlayer (board: Board) (keypress: Char): Board =
         let Δ = match keypress with
-                                | 'h' -> (-1,0) 
-                                | 'j' -> (0,1) 
-                                | 'l' -> (1,0) 
-                                | 'k' -> (0,-1) 
-                                | _ -> failwith "You can pry my vi keybindings from my cold, dead hands." 
+                                | 'l' -> (-1,0) 
+                                | 'd' -> (0,1) 
+                                | 'r' -> (1,0) 
+                                | 'u' -> (0,-1) 
+                                | _ -> failwith "There are only four known directions." 
         if (legalMove board Δ) then
             move board Δ
         else 
@@ -113,6 +113,8 @@ module game =
               |> List.map (String)
               |> String.concat Environment.NewLine
 
+    // I think I will deprecate this method in favor of something that takes a board nr, previous
+    // moves and a new move and returns the serialized board and the set of moves.
     let makeMove(board: string, move: Char) = 
         let board = parseBoard board
         let newBoard = movePlayer board move

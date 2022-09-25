@@ -25,7 +25,7 @@ top.Add(menu);
 
 static bool Quit()
 {
-    var n = MessageBox.Query(50, 7, "Quit game", "You're trying to say you like DOS\r\nbetter than me, right?", "Yes", "No");
+    var n = MessageBox.Query(50, 7, "Quit game", $"You're trying to say you like DOS{Environment.NewLine}better than me, right?", "Yes", "No");
     return n == 0;
 }
 
@@ -44,6 +44,14 @@ void KeyPress(View.KeyEventEventArgs obj)
     if (keypress == Key.h || keypress == Key.j || keypress == Key.k || keypress == Key.l)
     {
         var character = keypress.ToString().ToCharArray()[0];
+        var move = keypress switch
+        {
+            Key.k => "u",
+            Key.j => "d",
+            Key.l => "r",
+            Key.h => "l",
+            _ => throw new ArgumentOutOfRangeException($"No such key is configured...")
+        };
         board = sokoban.game.makeMove(board, character);
         gameWindow.Text = board;
 

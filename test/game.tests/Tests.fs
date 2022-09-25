@@ -6,7 +6,7 @@ open Xunit
 
 [<Fact>]
 let ``Game is not blank`` () =
-    Assert.True(game.init(1).Length > 4)
+    Assert.True(game.init(3).Length > 4)
 
 [<Fact>]
 let ``Parse and serialize returns same board except the annoying first newline`` () =
@@ -35,7 +35,7 @@ let parse_empty_string_returns_empty_board () =
 
 [<Fact>]
 let parseBoards () =  
-    let board = game.parseBoard(game.init())
+    let board = game.parseBoard(game.init(3))
     Assert.True('#' = board.[(0,0)]) 
     Assert.True(9 = (board |> Map.filter (fun (x,y) t -> x = 0) |> Map.toList |> List.length))
     Assert.True(4 = (board |> Map.filter (fun (x,y) t -> y = 0) |> Map.toList |> List.length))
@@ -60,7 +60,7 @@ let moveLeft_PlayerCanMove_PlayerMovesLeft () =
 @ "
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'h'
+    let newBoard = game.movePlayer board 'l'
     let positionAreEqual =  (expectedNewPostition = newBoard)
     Assert.True(positionAreEqual) 
 
@@ -71,7 +71,7 @@ let moveRight_OutOfBounds_NothingChanges() =
  @"
     let board = game.parseBoard(boardBefore)
 
-    let newBoard = game.movePlayer board 'l'
+    let newBoard = game.movePlayer board 'r'
     let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
 
@@ -82,7 +82,7 @@ let moveRight_PlayerHitsWall_NothingChanges() =
 @#"
     let board = game.parseBoard(boardBefore)
 
-    let newBoard = game.movePlayer board 'l'
+    let newBoard = game.movePlayer board 'r'
     let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
 
@@ -94,7 +94,7 @@ let moveDown_PlayerCantMove_NothingChanges() =
  @"
     let board = game.parseBoard(boardBefore)
 
-    let newBoard = game.movePlayer board 'j'
+    let newBoard = game.movePlayer board 'd'
     let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
 
@@ -109,7 +109,7 @@ let moveUp_PlayerCanMove_PlayerMovesUp () =
   "
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'k'
+    let newBoard = game.movePlayer board 'u'
     let positionAreEqual =  (expectedNewPostition = newBoard)
     Assert.True(positionAreEqual) 
 
@@ -123,7 +123,7 @@ let moveLeft_PlayerIsOnGoalSquare_PlayerMovesLeft () =
 @."
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'h'
+    let newBoard = game.movePlayer board 'l'
     let positionAreEqual = (expectedNewPostition = newBoard)
     //printfn "%A" (game.serializeBoard expectedNewPostition)
     //printfn "%A" (game.serializeBoard newBoard)
@@ -139,7 +139,7 @@ let moveLeft_PlayerMovesOntoGoalSquare_PlayerIsOnTopOfGoalSquare() =
 + "
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'h'
+    let newBoard = game.movePlayer board 'l'
     let positionAreEqual = (expectedNewPostition = newBoard)
     Assert.True(positionAreEqual) 
 
@@ -151,19 +151,19 @@ let moveDown_PlayerTriesToPushBoxOnWall_NothingChanges() =
  #"
     let board = game.parseBoard(boardBefore)
 
-    let newBoard = game.movePlayer board 'j'
+    let newBoard = game.movePlayer board 'd'
     let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
 
 [<Fact>]
-let moveLeft_PlayerPushBoxOnFloor_BoxAndPlayerMoves() =
+let moveRight_PlayerPushBoxOnFloor_BoxAndPlayerMoves() =
     let boardBefore = @"
 @$ "
     let boardAfter= @"
  @$"
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'l'
+    let newBoard = game.movePlayer board 'r'
     let positionAreEqual = (expectedNewPostition = newBoard)
     printfn "%A" (game.serializeBoard expectedNewPostition)
     printfn "%A" (game.serializeBoard newBoard)
@@ -182,7 +182,7 @@ let moveDown_PlayerPushBoxOnFloor_BoxAndPlayerMoves() =
  $"
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'j'
+    let newBoard = game.movePlayer board 'd'
     let positionAreEqual = (expectedNewPostition = newBoard)
     printfn "%A" (game.serializeBoard expectedNewPostition)
     printfn "%A" (game.serializeBoard newBoard)
@@ -200,7 +200,7 @@ let moveDown_PlayerPushBoxOnGoal_BoxAndPlayerMovesAndItIsBoxOnGoal() =
  *"
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'j'
+    let newBoard = game.movePlayer board 'd'
     let positionAreEqual = (expectedNewPostition = newBoard)
     printfn "%A" (game.serializeBoard expectedNewPostition)
     printfn "%A" (game.serializeBoard newBoard)
@@ -208,28 +208,28 @@ let moveDown_PlayerPushBoxOnGoal_BoxAndPlayerMovesAndItIsBoxOnGoal() =
 
 
 [<Fact>]
-let moveLeft_PlayerPushBoxOnGoalSquare_BoxAndPlayerMovesAndBoxIsOnGoalSquare() =
+let moveRight_PlayerPushBoxOnGoalSquare_BoxAndPlayerMovesAndBoxIsOnGoalSquare() =
     let boardBefore = @"
 @$."
     let boardAfter= @"
  @*"
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'l'
+    let newBoard = game.movePlayer board 'r'
     let positionAreEqual = (expectedNewPostition = newBoard)
     printfn "%A" (game.serializeBoard expectedNewPostition)
     printfn "%A" (game.serializeBoard newBoard)
     Assert.True(positionAreEqual) 
 
 [<Fact>]
-let moveLeft_PlayerPushBoxFromGoalSquareToGoalSquare_BoxAndPlayerMovesAndBoxIsOnGoalSquare() =
+let moveRight_PlayerPushBoxFromGoalSquareToGoalSquare_BoxAndPlayerMovesAndBoxIsOnGoalSquare() =
     let boardBefore = @"
 @*."
     let boardAfter= @"
  +*"
     let board = game.parseBoard(boardBefore)
     let expectedNewPostition = game.parseBoard(boardAfter) 
-    let newBoard = game.movePlayer board 'l'
+    let newBoard = game.movePlayer board 'r'
     let positionAreEqual = (expectedNewPostition = newBoard)
     //printfn "%A" (game.serializeBoard expectedNewPostition)
     //printfn "%A" (game.serializeBoard newBoard)
@@ -243,7 +243,7 @@ let moveDown_PlayerTriesToPushBoxGoalSquareOnWall_NothingChanges() =
  #"
     let board = game.parseBoard(boardBefore)
 
-    let newBoard = game.movePlayer board 'j'
+    let newBoard = game.movePlayer board 'd'
     printfn "%A" (game.serializeBoard newBoard)
     let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
