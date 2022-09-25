@@ -31,10 +31,12 @@ static bool Quit()
 
 
 
-var board = sokoban.game.init(3);
+var board = sokoban.game.init(0);
 
-var gameWindow = new Label(3, 3, board);
+var help = new Label(3, 3, "Press h,j,k,l to move, r to reset, 0-5 to change board.");
+var gameWindow = new Label(10, 10, board);
 
+win.Add( help);
 win.Add( gameWindow);
 win.KeyDown += KeyPress;
 

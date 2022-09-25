@@ -7,6 +7,22 @@ module game =
     type Board = Map<(int*int),char> 
 
     let init (board_nr:int): String = 
+        let board0 = @" 
+###
+#.#
+#$####
+#@ $.#
+######"
+
+        let board1 = @" 
+###
+######
+#. $ #
+# $  #
+#  @$#
+#.  .#
+######"
+
         let board3 = @"
 ####
 #  #######
@@ -18,6 +34,8 @@ module game =
   #    #
   ######" 
         let board: string = match board_nr with
+                                | 0 -> board0 
+                                | 1 -> board1 
                                 | 3 -> board3 
                                 | _ -> failwith "I don't have that"
         let removeFirstNewline = board |> Seq.skip (Environment.NewLine.Length) |> Seq.toArray
