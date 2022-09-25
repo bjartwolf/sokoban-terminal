@@ -41,7 +41,7 @@ win.KeyDown += KeyPress;
 void KeyPress(View.KeyEventEventArgs obj)
 {
     var keypress = obj.KeyEvent.Key;
-    if (keypress == Key.h || keypress == Key.j || keypress == Key.k || keypress == Key.l)
+    if (keypress is Key.h or Key.j or Key.k or Key.l or Key.r)
     {
         var character = keypress.ToString().ToCharArray()[0];
         var move = keypress switch
@@ -50,9 +50,17 @@ void KeyPress(View.KeyEventEventArgs obj)
             Key.j => "d",
             Key.l => "r",
             Key.h => "l",
+            Key.r => "reset",
             _ => throw new ArgumentOutOfRangeException($"No such key is configured...")
         };
-        board = sokoban.game.makeMove(board, character);
+        if (keypress is Key.r)
+        {
+            board = sokoban.game.init(3);
+        }
+        else
+        {
+            board = sokoban.game.makeMove(board, move.First());
+        }
         gameWindow.Text = board;
 
     }
