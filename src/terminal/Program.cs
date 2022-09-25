@@ -33,7 +33,7 @@ var boardNr = 3;
 var board = sokoban.game.startNewBoard(boardNr);
 
 var history = string.Empty; 
-var help = new Label(3, 3, "Press h,j,k,l to move, r to reset, 0-5 to change board, u to undo");
+var help = new Label(3, 3, "Press h,j,k,l to move, r to reset, 0,1 or 3 to change board, u to undo");
 var historyWindow = new Label(3, 4, history);
 var gameWindow = new Label(10, 10, board);
 
@@ -45,27 +45,37 @@ win.KeyDown += KeyPress;
 void KeyPress(View.KeyEventEventArgs obj)
 {
     var keypress = obj.KeyEvent.Key;
-    if (keypress is Key.h or Key.j or Key.k or Key.l or Key.r or Key.u)
+    if (keypress is Key.h or Key.j or Key.k or Key.l or Key.r or Key.u or Key.D0 or Key.D1 or Key.D3)
     {
-        var character = keypress.ToString().ToCharArray()[0];
-        var move = keypress switch
-        {
-            Key.k => "u",
-            Key.j => "d",
-            Key.l => "r",
-            Key.h => "l",
-            Key.r => "reset",
-            Key.u => "b",
-            _ => throw new ArgumentOutOfRangeException($"No such key is configured...")
-        };
         if (keypress is Key.r)
         {
             history = "";
             board = sokoban.game.startNewBoard(boardNr);
+        } 
+        else if (keypress is Key.D0 or Key.D1 or Key.D3)
+        {
+            history = "";
+            boardNr = keypress switch
+            {
+                Key.D0 => 0,
+                Key.D1 => 1,
+                Key.D3 => 3
+            };
+            board = sokoban.game.startNewBoard(boardNr);
         }
         else
         {
-            (board,history) = sokoban.game.attemptMove(boardNr,history, move.First());
+            var character = keypress.ToString().ToCharArray()[0];
+            var move = keypress switch
+            {
+                Key.k => "u",
+                Key.j => "d",
+                Key.l => "r",
+                Key.h => "l",
+                Key.u => "b",
+            _ => throw new ArgumentOutOfRangeException($"No such key is configured...")
+        };
+             (board,history) = sokoban.game.attemptMove(boardNr,history, move.First());
         }
         gameWindow.Text = board;
         historyWindow.Text = history;
