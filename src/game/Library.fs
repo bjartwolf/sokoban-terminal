@@ -154,13 +154,22 @@ module game =
         // fancy or load or something, but for now I guess it is fine to just assume we actually
         // have the previous state in our map
         // I guess we neeed to have another intiialize-function that takes no moves.
-        let board = allKnownBoards[(boardnr, history)]
-        let (newBoard, moveMade) = movePlayer board move
+        if move = 'b' then 
+            let history_undoed = if String.IsNullOrEmpty(history) then 
+                                    "" 
+                                 else 
+                                    history.Remove(history.Length-1) 
 
-        let history' =  history + match moveMade with 
-                                    | Some move -> move.ToString()
-                                    | None -> ""
-        allKnownBoards <- allKnownBoards.Add( (boardnr,history'),newBoard)
-        (serializeBoard newBoard, history')
+            let board = allKnownBoards[(boardnr, history_undoed)]
+            (serializeBoard board, history_undoed)
+        else 
+            let board = allKnownBoards[(boardnr, history)]
+            let (newBoard, moveMade) = movePlayer board move
+
+            let history' =  history + match moveMade with 
+                                        | Some move -> move.ToString()
+                                        | None -> ""
+            allKnownBoards <- allKnownBoards.Add( (boardnr,history'),newBoard)
+            (serializeBoard newBoard, history')
 
 

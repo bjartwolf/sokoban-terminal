@@ -55,7 +55,7 @@ void KeyPress(View.KeyEventEventArgs obj)
             Key.l => "r",
             Key.h => "l",
             Key.r => "reset",
-            Key.u => "u",
+            Key.u => "b",
             _ => throw new ArgumentOutOfRangeException($"No such key is configured...")
         };
         if (keypress is Key.r)
