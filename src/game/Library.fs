@@ -138,4 +138,29 @@ module game =
         let (newBoard,_) = movePlayer board move
         serializeBoard newBoard
 
+    let mutable allKnownBoards: Map<int*string,Board> = Map.empty
+
+    let startNewBoard (boardnr: int): (string) = 
+        let board = parseBoard (init boardnr) 
+        // TBD:
+        // this might give some racestuff at a server with concurrency... 
+        // should likely use a memorycache or something, which is threadsafe
+        allKnownBoards <- allKnownBoards.Add( (boardnr,""),board)
+        serializeBoard board 
+
+    let attemptMove(boardnr: int, history: string, move: Char): (string*string) = 
+        // lookup board from history (it should be there, how else can we actually play?)
+        // it could have some fancy feature to re-build the solution, as someone could ofcourse start
+        // fancy or load or something, but for now I guess it is fine to just assume we actually
+        // have the previous state in our map
+        // I guess we neeed to have another intiialize-function that takes no moves.
+        let board = allKnownBoards[(boardnr, history)]
+        let (newBoard, moveMade) = movePlayer board move
+
+        let history' =  history + match moveMade with 
+                                    | Some move -> move.ToString()
+                                    | None -> ""
+        allKnownBoards <- allKnownBoards.Add( (boardnr,history'),board)
+        (serializeBoard newBoard, history')
+
 

@@ -252,4 +252,22 @@ let moveDown_PlayerTriesToPushBoxGoalSquareOnWall_NothingChanges() =
     let positionAreEqual =  (board = newBoard)
     Assert.True(positionAreEqual) 
 
+[<Fact>]
+let board0_playermovesdowntwice_nothingChanges() =
+    let board = game.startNewBoard(0)
+    let _,history1 = game.attemptMove(0,"",'d') 
+    let _,history2 = game.attemptMove(0,history1,'d') 
+    Assert.True(String.IsNullOrEmpty(history2)) 
+
+
+[<Fact>]
+let board3_playermovesdowntwice_nothingChanges() =
+    let board = game.startNewBoard(3)
+    let _,history1 = game.attemptMove(3,"",'d') 
+    let _,history2 = game.attemptMove(3,history1,'d') 
+    let isHistoryEqual = history2 = "dd"
+    Assert.True(isHistoryEqual) 
+
+
+
 
