@@ -65,7 +65,6 @@ void KeyPress(View.KeyEventEventArgs obj)
         }
         else
         {
-            var character = keypress.ToString().ToCharArray()[0];
             var move = keypress switch
             {
                 Key.k => "u",
@@ -74,8 +73,8 @@ void KeyPress(View.KeyEventEventArgs obj)
                 Key.h => "l",
                 Key.u => "b",
             _ => throw new ArgumentOutOfRangeException($"No such key is configured...")
-        };
-             (board,history) = sokoban.game.attemptMove(boardNr,history, move.First());
+            };
+            (board,history) = sokoban.game.attemptMove(boardNr,history, move.First());
         }
         gameWindow.Text = board;
         historyWindow.Text = history;
@@ -84,4 +83,3 @@ void KeyPress(View.KeyEventEventArgs obj)
 
 Application.Run();
 Application.Shutdown();
-
