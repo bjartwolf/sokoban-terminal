@@ -37,13 +37,13 @@ module game =
     // TODO: Simplify internals.  
     let parseBoard (board:string): Board = 
         board.Split(Environment.NewLine) 
-                |> Array.map (fun l -> l.ToCharArray() )
-                |> Array.filter (fun l -> l.Length > 0)
-                |> Array.mapi (fun y e -> (y,e))
-                |> Array.map (fun (y,e) -> e |> Array.mapi (fun x c -> (x,y),c))
-                |> Array.toList
-                |> List.collect (fun x -> x |> Array.toList)
-                |> Map
+            |> Array.toList
+            |> List.map (fun l -> l.ToCharArray() |> Array.toList)
+            |> List.filter (fun l -> l <> [])
+            |> List.mapi (fun y e -> (y,e))
+            |> List.map (fun (y,e) -> e |> List.mapi (fun x c -> (x,y),c))
+            |> List.collect (id)
+            |> Map
 
     let getPlayerPosition (board: Board): int*int =
           board |> Map.filter (fun _ t -> t=player || t=player_on_goal_square )|> Map.keys |> Seq.head 
