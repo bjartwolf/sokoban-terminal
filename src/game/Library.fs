@@ -95,7 +95,7 @@ module game =
                                 | 'j' -> (0,1) 
                                 | 'l' -> (1,0) 
                                 | 'k' -> (0,-1) 
-                                | _ -> failwith "not a valid move" 
+                                | _ -> failwith "You can pry my vi keybindings from my cold, dead hands." 
         if (legalMove board Δ) then
             move board Δ
         else 
@@ -113,3 +113,5 @@ module game =
         let board = parseBoard board
         let newBoard = movePlayer board move
         serializeBoard newBoard
+
+
