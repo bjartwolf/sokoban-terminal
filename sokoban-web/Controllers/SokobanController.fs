@@ -15,8 +15,22 @@ open Microsoft.AspNetCore.Hosting.Server.Features
 type SokobanController (logger : ILogger<SokobanController>, server: IServer) =
     inherit ControllerBase()
 
-    [<HttpGet("{boardnr}")>]
+    [<HttpGet("{boardnr}/")>]
     member _.Get(boardnr:int) =
-                { Moves = server.Features.Get<IServerAddressesFeature>().Addresses |> Seq.map (fun a -> new Uri(a))  |> Seq.toList;
-                  Game = boardnr.ToString()
+                let board = sokoban.game.init(0)
+                let moves = ['u';'d';'l';'r';'b']
+                let serverUrl = server.Features.Get<IServerAddressesFeature>().Addresses.First()
+                let moveUrls = moves |> List.map (fun m -> new Uri(sprintf "%s/sokoban/%d/%s" serverUrl boardnr (m.ToString())))
+                { Moves = moveUrls 
+                  Game = board 
+                }
+
+    [<HttpGet("{boardnr}/{history}/")>]
+    member _.Get(boardnr:int, history:string) =
+                let board = sokoban.game.init(0)
+                let moves = ['u';'d';'l';'r';'b']
+                let serverUrl = server.Features.Get<IServerAddressesFeature>().Addresses.First()
+                let moveUrls = moves |> List.map (fun m -> new Uri(sprintf "%s/sokoban/%d/%s" serverUrl boardnr (history + m.ToString())))
+                { Moves = moveUrls 
+                  Game = board 
                 }
