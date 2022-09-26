@@ -17,7 +17,7 @@ type SokobanController (logger : ILogger<SokobanController>, server: IServer) =
 
     [<HttpGet("{boardnr}/")>]
     member _.Get(boardnr:int) =
-                let board = sokoban.game.init(0)
+                let board = sokoban.game.init(boardnr)
                 let moves = ['u';'d';'l';'r']
                 let serverUrl = server.Features.Get<IServerAddressesFeature>().Addresses.First()
                 let moveUrls = moves |> List.map (fun m -> new Uri(sprintf "%s/sokoban/%d/%s" serverUrl boardnr (m.ToString())))
