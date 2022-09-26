@@ -151,6 +151,12 @@ module game =
     let wonGame (board: Board): bool =
         not (board.Values.Contains(goal_square)) && not (board.Values.Contains(player_on_goal_square))
 
+    let rec lookupBoard (boardnr: int) (state: string): Board =
+        allKnownBoards[(boardnr, state)]
+
+    let rememberBoard (boardnr: int) (state: string) (board: Board) : unit =
+        allKnownBoards <- allKnownBoards.Add( (boardnr,state),board)
+
     let attemptMove(boardnr: int, history: string, move: Char): (string*string) = 
         let writeWinOnBoard (board: Board): Board = 
             board  
@@ -167,22 +173,22 @@ module game =
                                     "" 
                                  else 
                                     history.Remove(history.Length-1) 
-            let board = allKnownBoards[(boardnr, history_undoed)]
+            let board = lookupBoard boardnr history_undoed 
             if (wonGame board) then
                 (serializeBoard (writeWinOnBoard board), history_undoed)
             else 
                 (serializeBoard board, history_undoed)
         else 
-            let board = allKnownBoards[(boardnr, history)]
-            let (newBoard, moveMade) = movePlayer board move
+            let board = lookupBoard boardnr history 
+            let (board', moveMade) = movePlayer board move
 
             let history' =  history + match moveMade with 
                                         | Some move -> move.ToString()
                                         | None -> ""
-            allKnownBoards <- allKnownBoards.Add( (boardnr,history'),newBoard)
-            if (wonGame newBoard) then
+            rememberBoard boardnr history' board' 
+            if (wonGame board') then
                 (serializeBoard (writeWinOnBoard board), history')
             else 
-                (serializeBoard newBoard, history')
+                (serializeBoard board, history')
 
 
