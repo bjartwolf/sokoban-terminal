@@ -152,6 +152,11 @@ module game =
         not (board.Values.Contains(goal_square)) && not (board.Values.Contains(player_on_goal_square))
 
     let attemptMove(boardnr: int, history: string, move: Char): (string*string) = 
+        let writeWinOnBoard (board: Board): Board = 
+            board  
+                |> Map.add (1,0) 'W' 
+                |> Map.add (2,0) 'I' 
+                |> Map.add (3,0) 'N'
         // lookup board from history (it should be there, how else can we actually play?)
         // it could have some fancy feature to re-build the solution, as someone could ofcourse start
         // fancy or load or something, but for now I guess it is fine to just assume we actually
@@ -164,11 +169,7 @@ module game =
                                     history.Remove(history.Length-1) 
             let board = allKnownBoards[(boardnr, history_undoed)]
             if (wonGame board) then
-                let winnerBoard = board  
-                                    |> Map.add (1,0) 'W' 
-                                    |> Map.add (2,0) 'I' 
-                                    |> Map.add (3,0) 'N'
-                (serializeBoard winnerBoard, history_undoed)
+                (serializeBoard (writeWinOnBoard board), history_undoed)
             else 
                 (serializeBoard board, history_undoed)
         else 
@@ -180,11 +181,7 @@ module game =
                                         | None -> ""
             allKnownBoards <- allKnownBoards.Add( (boardnr,history'),newBoard)
             if (wonGame newBoard) then
-                let winnerBoard = newBoard 
-                                    |> Map.add (1,0) 'W' 
-                                    |> Map.add (2,0) 'I' 
-                                    |> Map.add (3,0) 'N'
-                (serializeBoard winnerBoard, history')
+                (serializeBoard (writeWinOnBoard board), history')
             else 
                 (serializeBoard newBoard, history')
 
