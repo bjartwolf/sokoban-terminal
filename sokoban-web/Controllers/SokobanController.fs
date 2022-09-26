@@ -18,7 +18,7 @@ type SokobanController (logger : ILogger<SokobanController>, server: IServer) =
     [<HttpGet("{boardnr}/")>]
     member _.Get(boardnr:int) =
                 let board = sokoban.game.init(0)
-                let moves = ['u';'d';'l';'r';'b']
+                let moves = ['u';'d';'l';'r']
                 let serverUrl = server.Features.Get<IServerAddressesFeature>().Addresses.First()
                 let moveUrls = moves |> List.map (fun m -> new Uri(sprintf "%s/sokoban/%d/%s" serverUrl boardnr (m.ToString())))
                 { Moves = moveUrls 
@@ -27,10 +27,12 @@ type SokobanController (logger : ILogger<SokobanController>, server: IServer) =
 
     [<HttpGet("{boardnr}/{history}/")>]
     member _.Get(boardnr:int, history:string) =
-                let board = sokoban.game.init(0)
+                let lastMove = history.[history.Length-1]
+                let previousState = history.Remove(history.Length-1) 
                 let moves = ['u';'d';'l';'r';'b']
                 let serverUrl = server.Features.Get<IServerAddressesFeature>().Addresses.First()
-                let moveUrls = moves |> List.map (fun m -> new Uri(sprintf "%s/sokoban/%d/%s" serverUrl boardnr (history + m.ToString())))
+                let (game,move) = sokoban.game.attemptMove(boardnr,previousState,lastMove)
+                let moveUrls = moves |> List.map (fun m -> new Uri(sprintf "%s/sokoban/%d/%s" serverUrl boardnr (move+m.ToString())))
                 { Moves = moveUrls 
-                  Game = board 
+                  Game = game 
                 }
