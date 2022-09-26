@@ -12,7 +12,7 @@ open Microsoft.AspNetCore.Hosting.Server.Features
 
 [<ApiController>]
 [<Route("[controller]")>]
-type WeatherForecastController (logger : ILogger<WeatherForecastController>, server: IServer) =
+type SokobanController (logger : ILogger<SokobanController>, server: IServer) =
     inherit ControllerBase()
 
     [<HttpGet>]
