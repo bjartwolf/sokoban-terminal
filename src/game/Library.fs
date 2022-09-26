@@ -159,8 +159,8 @@ module game =
             | (None, _)  -> 
                 let lastMove = state.[state.Length-1]
                 let previousState = state.Remove(state.Length-1) 
-                let (a,b) = movePlayer (lookupBoard boardnr previousState) lastMove 
-                a
+                let (board,_) = movePlayer (lookupBoard boardnr previousState) lastMove 
+                board 
 
     let rememberBoard (boardnr: int) (state: string) (board: Board) : unit =
         allKnownBoards <- allKnownBoards.Add( (boardnr,state),board)
