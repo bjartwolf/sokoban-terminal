@@ -300,3 +300,11 @@ let board0_noinitialize_udrr_winsgame() =
     let isHistoryEqual = history4 = "udrr"
     Assert.True(isHistoryEqual) 
     Assert.True(finalState.Contains("WIN")) 
+
+[<Fact>]
+let board1_noinitialize_urduullddrdl_wins() =
+    let gameNr = 1
+    let finalState,history = game.attemptMove(gameNr,"urduullddrd",'l') 
+    let isHistoryEqual = history = "urduullddrdl"
+    Assert.True(isHistoryEqual) 
+    Assert.True(finalState.Contains("WIN")) 
