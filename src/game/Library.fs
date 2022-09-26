@@ -152,7 +152,15 @@ module game =
         not (board.Values.Contains(goal_square)) && not (board.Values.Contains(player_on_goal_square))
 
     let rec lookupBoard (boardnr: int) (state: string): Board =
-        allKnownBoards[(boardnr, state)]
+        let b = allKnownBoards.TryFind (boardnr, state)
+        match (b,state) with 
+            | (Some board,_) -> board
+            | (None, "")  -> parseBoard(init boardnr)
+            | (None, _)  -> 
+                let lastMove = state.[state.Length-1]
+                let previousState = state.Remove(state.Length-1) 
+                let (a,b) = movePlayer (lookupBoard boardnr previousState) lastMove 
+                a
 
     let rememberBoard (boardnr: int) (state: string) (board: Board) : unit =
         allKnownBoards <- allKnownBoards.Add( (boardnr,state),board)
@@ -187,8 +195,8 @@ module game =
                                         | None -> ""
             rememberBoard boardnr history' board' 
             if (wonGame board') then
-                (serializeBoard (writeWinOnBoard board), history')
+                (serializeBoard (writeWinOnBoard board'), history')
             else 
-                (serializeBoard board, history')
+                (serializeBoard board', history')
 
 
