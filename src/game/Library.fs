@@ -57,7 +57,7 @@ module game =
     let keypress_right = 'r'
 
     let parseBoard (board:string): Board = 
-        board.Split(Environment.NewLine) 
+        board.Split(Environment.NewLine.ToCharArray()) 
             |> Array.toList
             |> List.map (fun l -> l.ToCharArray() |> Array.toList)
             |> List.filter (fun l -> l <> [])
