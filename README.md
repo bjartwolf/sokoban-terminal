@@ -12,3 +12,12 @@ dotnet run --project src/terminal/sokoban-terminal.csproj
 It is built with [Terminal.Gui](https://gui-cs.github.io/Terminal.Gui/index.html)
 
 ![Screenshot](screenshot.PNG)
+
+
+# Python things
+
+```
+dotnet new --install Fable.Template
+dotnet tool restore
+
+```
