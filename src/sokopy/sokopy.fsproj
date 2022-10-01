@@ -20,4 +20,8 @@
     <ProjectReference Include="..\game\game.fsproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.6" />
+  </ItemGroup>
+
 </Project>
