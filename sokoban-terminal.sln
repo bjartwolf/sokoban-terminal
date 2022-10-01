@@ -11,7 +11,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "game.tests", "test\game.tes
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "sokoban-web", "sokoban-web\sokoban-web.fsproj", "{82E0428A-ACC4-4027-8320-B179C72CF8AE}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "sokopy", "src\sokopy\sokopy.fsproj", "{C67C120A-CCF7-4325-8454-F316CF0705AA}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "sokopy", "src\sokopy\sokopy.fsproj", "{C67C120A-CCF7-4325-8454-F316CF0705AA}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "App", "sokoban-js\src\App.fsproj", "{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C67C120A-CCF7-4325-8454-F316CF0705AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C67C120A-CCF7-4325-8454-F316CF0705AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C67C120A-CCF7-4325-8454-F316CF0705AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
