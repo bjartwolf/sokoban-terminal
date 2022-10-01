@@ -2,6 +2,9 @@ module App
 
 open Browser.Dom
 open sokoban
+open Browser.Types
+open System
+
 // Mutable variable to count the number of times we clicked the button
 let mutable count = 0
 
@@ -14,25 +17,19 @@ let gameScreen = document.querySelector(".game-screen") :?> Browser.Types.HTMLDi
 
 let boardNr = 3 
 let mutable moves: string = ""
+
+let go (dir: Char) =
+    let (board, history)= game.attemptMove(boardNr, moves, dir)
+    gameScreen.textContent <- board
+    moves <- history
+
 gameScreen.textContent <- game.init(boardNr) 
 
-// Register our listener
-downButton.onclick <- fun _ ->
-    let (board, history)= game.attemptMove(boardNr, moves, 'd')
-    gameScreen.textContent <- board
-    moves <- history
 
-upButton.onclick <- fun _ ->
-    let (board, history)= game.attemptMove(boardNr, moves, 'u')
-    gameScreen.textContent <- board
-    moves <- history
+downButton.onclick <- fun _ -> go ('d')
+upButton.onclick <- fun _ -> go 'u'
+rightButton.onclick <- fun _ -> go 'r' 
+leftButton.onclick <- fun _ -> go 'l'
 
-rightButton.onclick <- fun _ ->
-    let (board, history)= game.attemptMove(boardNr, moves, 'r')
-    gameScreen.textContent <- board
-    moves <- history
-
-leftButton.onclick <- fun _ ->
-    let (board, history)= game.attemptMove(boardNr, moves, 'l')
-    gameScreen.textContent <- board
-    moves <- history
+document.onkeydown <- fun (keyEvent: KeyboardEvent) -> go (keyEvent.key |> Seq.head)
+                                 
