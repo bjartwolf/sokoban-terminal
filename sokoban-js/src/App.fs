@@ -16,5 +16,11 @@ let go (dir: Char) =
     moves <- history
 
 gameScreen.textContent <- game.init(boardNr) 
-document.onkeydown <- fun (keyEvent: KeyboardEvent) -> go (keyEvent.key |> Seq.head)
+document.onkeydown <- fun (keyEvent: KeyboardEvent) -> 
+    match keyEvent.key with
+        | "a" | "h" | "ArrowLeft" -> go 'l'
+        | "w"| "k" | "ArrowUp" -> go 'u'
+        | "s" | "j" |"ArrowDown" -> go 'd'
+        | "d" | "l" |"ArrowRight" -> go 'r'
+        | _ -> () 
                                  
