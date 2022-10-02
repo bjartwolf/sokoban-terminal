@@ -13,12 +13,14 @@ tk.geometry("750x280")
 
 canvas= Canvas(tk, width= 1000, height= 750, bg="blue")
 
-canvas.create_text(300, 100, text=board, fill="white", font=('TkFixedFont'))
+tekst = canvas.create_text(300, 100, text=board, fill="white", font=('TkFixedFont'))
 canvas.pack()
 
 def left(self):
      newboard, newhistory = attempt_move(gameNr, history, "l")
-     print(newboard)
+     board = newboard
+     canvas.itemconfig(tekst,text = board)
+     tk.update()
 
 tk.bind('l',left)
 
