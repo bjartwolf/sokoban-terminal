@@ -8,15 +8,18 @@ from fable_modules.fable_library.types import Array
 from fable_modules.fable_library.util import (equals, compare_arrays, number_hash, create_atom, string_hash)
 
 def init(board_nr: int) -> str:
+    board0: str = " \r\n###\r\n#.#\r\n#$####\r\n#@ $.#\r\n######"
+    board1: str = " \r\n###\r\n######\r\n#. $ #\r\n# $  #\r\n#  @$#\r\n#.  .#\r\n######"
+    board3: str = "\r\n####\r\n#  #######\r\n#  ......#\r\n#  ##### #\r\n##   $@# #\r\n #  $$$$ #\r\n ##  $ ###\r\n  #    #\r\n  ######"
     board: str
     if board_nr == 0:
-        board = " \r\n###\r\n#.#\r\n#$####\r\n#@ $.#\r\n######"
+        board = board0
 
     elif board_nr == 1:
-        board = " \r\n###\r\n######\r\n#. $ #\r\n# $  #\r\n#  @$#\r\n#.  .#\r\n######"
+        board = board1
 
     elif board_nr == 3:
-        board = "\r\n####\r\n#  #######\r\n#  ......#\r\n#  ##### #\r\n##   $@# #\r\n #  $$$$ #\r\n ##  $ ###\r\n  #    #\r\n  ######"
+        board = board3
 
     else: 
         raise Exception("I don\'t have that")
@@ -52,10 +55,12 @@ def parse_board(board: str) -> Any:
         return x_1
 
     def mapping_3(tupled_arg: Tuple[int, FSharpList[str]], board: str=board) -> FSharpList[Tuple[Tuple[int, int], str]]:
+        y_1: int = tupled_arg[0] or 0
+        e_1: FSharpList[str] = tupled_arg[1]
         def mapping_2(x: int, c: str, tupled_arg: Tuple[int, FSharpList[str]]=tupled_arg) -> Tuple[Tuple[int, int], str]:
-            return ((x, tupled_arg[0]), c)
+            return ((x, y_1), c)
 
-        return map_indexed(mapping_2, tupled_arg[1])
+        return map_indexed(mapping_2, e_1)
 
     def mapping_1(y: int, e: FSharpList[str], board: str=board) -> Tuple[int, FSharpList[str]]:
         return (y, e)
@@ -90,13 +95,18 @@ def get_player_position(board: Any) -> Tuple[int, int]:
 
 
 def get_tile(board: Any, pos_: int, pos__1: int) -> Optional[str]:
-    return try_find((pos_, pos__1), board)
+    pos: Tuple[int, int] = (pos_, pos__1)
+    return try_find(pos, board)
 
 
 def can_push_box(board: Any, _arg2_: int, _arg2__1: int, _arg1_: int, _arg1__1: int) -> bool:
     _arg: Tuple[int, int] = (_arg2_, _arg2__1)
     _arg_1: Tuple[int, int] = (_arg1_, _arg1__1)
-    tile_behind_box: Optional[str] = get_tile(board, _arg[0] + (2 * _arg_1[0]), _arg[1] + (2 * _arg_1[1]))
+    y: int = _arg[1] or 0
+    x: int = _arg[0] or 0
+    Δy: int = _arg_1[1] or 0
+    Δx: int = _arg_1[0] or 0
+    tile_behind_box: Optional[str] = get_tile(board, x + (2 * Δx), y + (2 * Δy))
     if equals(tile_behind_box, floor):
         return True
 
@@ -106,7 +116,8 @@ def can_push_box(board: Any, _arg2_: int, _arg2__1: int, _arg1_: int, _arg1__1: 
 
 
 def legal_move(board: Any, Δ_: int, Δ__1: int) -> bool:
-    Δ_1: Tuple[int, int] = (Δ_, Δ__1)
+    Δ: Tuple[int, int] = (Δ_, Δ__1)
+    Δ_1: Tuple[int, int] = Δ
     Δy: int = Δ_1[1] or 0
     Δx: int = Δ_1[0] or 0
     pattern_input: Tuple[int, int] = get_player_position(board)
@@ -117,21 +128,27 @@ def legal_move(board: Any, Δ_: int, Δ__1: int) -> bool:
     if t_0027 is None:
         return False
 
-    elif t_0027 == wall:
-        c_2: str = t_0027
-        return False
-
     else: 
         def _arrow2(__unit: Literal[None]=None, board: Any=board, Δ_: int=Δ_, Δ__1: int=Δ__1) -> bool:
-            c_1: str = t_0027
-            return True if (c_1 == box) else (c_1 == box_on_goal_square)
+            c: str = t_0027
+            return c == wall
 
         if _arrow2():
-            c_3: str = t_0027
-            return can_push_box(board, x, y, Δx, Δy)
+            c_2: str = t_0027
+            return False
 
         else: 
-            return True
+            def _arrow3(__unit: Literal[None]=None, board: Any=board, Δ_: int=Δ_, Δ__1: int=Δ__1) -> bool:
+                c_1: str = t_0027
+                return True if (c_1 == box) else (c_1 == box_on_goal_square)
+
+            if _arrow3():
+                c_3: str = t_0027
+                return can_push_box(board, x, y, Δx, Δy)
+
+            else: 
+                return True
+
 
 
 
@@ -148,9 +165,13 @@ def move(board: Any, _arg1_: int, _arg1__1: int) -> Any:
     tile_Δ: Optional[str] = get_tile(board, x + Δx, y + Δy)
     tile_Δ_0027: str = player_on_goal_square if (True if equals(tile_Δ, goal_square) else equals(tile_Δ, box_on_goal_square)) else player
     is_pushing_box: bool = True if equals(tile_Δ, box) else equals(tile_Δ, box_on_goal_square)
-    board_with_player_back: Any = add(pos_0027, tile_Δ_0027, add((x, y), floor if equals(tile, player) else goal_square, board))
+    what_was_under_player: str = floor if equals(tile, player) else goal_square
+    board_without_player: Any = add((x, y), what_was_under_player, board)
+    board_with_player_back: Any = add(pos_0027, tile_Δ_0027, board_without_player)
     if is_pushing_box:
-        return add((x + (2 * Δx), y + (2 * Δy)), box_on_goal_square if equals(get_tile(board, x + (2 * Δx), y + (2 * Δy)), goal_square) else box, board_with_player_back)
+        is_box_pushed_on_goal_square: bool = equals(get_tile(board, x + (2 * Δx), y + (2 * Δy)), goal_square)
+        box_tile: str = box_on_goal_square if is_box_pushed_on_goal_square else box
+        return add((x + (2 * Δx), y + (2 * Δy)), box_tile, board_with_player_back)
 
     else: 
         return board_with_player_back
@@ -199,40 +220,43 @@ def serialize_board(board: Any) -> str:
         return tuple[1]
 
     def projection(tupled_arg: Tuple[Tuple[int, int], str], board: Any=board) -> int:
-        return tupled_arg[0][1]
+        y: int = tupled_arg[0][1] or 0
+        return y
 
-    class ObjectExpr5:
+    class ObjectExpr6:
         @property
         def Equals(self) -> Callable[[int, int], bool]:
-            def _arrow3(x: int, y_1: int) -> bool:
+            def _arrow4(x: int, y_1: int) -> bool:
                 return x == y_1
-
-            return _arrow3
-
-        @property
-        def GetHashCode(self) -> Callable[[int], int]:
-            def _arrow4(x: int) -> int:
-                return number_hash(x)
 
             return _arrow4
 
-    return join("\n", map(mapping_4, map(mapping_3, map(mapping_2, map(mapping, List_groupBy(projection, to_list(board), ObjectExpr5()))))))
+        @property
+        def GetHashCode(self) -> Callable[[int], int]:
+            def _arrow5(x: int) -> int:
+                return number_hash(x)
+
+            return _arrow5
+
+    return join("\n", map(mapping_4, map(mapping_3, map(mapping_2, map(mapping, List_groupBy(projection, to_list(board), ObjectExpr6()))))))
 
 
 def make_move(board: str, move_1: str) -> str:
-    return serialize_board(move_player(parse_board(board), move_1)[0])
+    board_1: Any = parse_board(board)
+    new_board: Any = move_player(board_1, move_1)[0]
+    return serialize_board(new_board)
 
 
-class ObjectExpr7:
+class ObjectExpr8:
     @property
     def Compare(self) -> Callable[[Tuple[int, str], Tuple[int, str]], int]:
-        def _arrow6(x: Tuple[int, str], y: Tuple[int, str]) -> int:
+        def _arrow7(x: Tuple[int, str], y: Tuple[int, str]) -> int:
             return compare_arrays(x, y)
 
-        return _arrow6
+        return _arrow7
 
 
-all_known_boards: Any = create_atom(empty_1(ObjectExpr7()))
+all_known_boards: Any = create_atom(empty_1(ObjectExpr8()))
 
 def start_new_board(boardnr: int) -> str:
     board: Any = parse_board(init(boardnr))
@@ -241,38 +265,38 @@ def start_new_board(boardnr: int) -> str:
 
 
 def won_game(board: Any) -> bool:
-    class ObjectExpr10:
+    class ObjectExpr11:
         @property
         def Equals(self) -> Callable[[str, str], bool]:
-            def _arrow8(x: str, y: str) -> bool:
+            def _arrow9(x: str, y: str) -> bool:
                 return x == y
-
-            return _arrow8
-
-        @property
-        def GetHashCode(self) -> Callable[[str], int]:
-            def _arrow9(x: str) -> int:
-                return string_hash(x)
 
             return _arrow9
 
-    if not contains(goal_square, FSharpMap__get_Values(board), ObjectExpr10()):
-        class ObjectExpr13:
+        @property
+        def GetHashCode(self) -> Callable[[str], int]:
+            def _arrow10(x: str) -> int:
+                return string_hash(x)
+
+            return _arrow10
+
+    if not contains(goal_square, FSharpMap__get_Values(board), ObjectExpr11()):
+        class ObjectExpr14:
             @property
             def Equals(self) -> Callable[[str, str], bool]:
-                def _arrow11(x_1: str, y_1: str) -> bool:
+                def _arrow12(x_1: str, y_1: str) -> bool:
                     return x_1 == y_1
-
-                return _arrow11
-
-            @property
-            def GetHashCode(self) -> Callable[[str], int]:
-                def _arrow12(x_1: str) -> int:
-                    return string_hash(x_1)
 
                 return _arrow12
 
-        return not contains(player_on_goal_square, FSharpMap__get_Values(board), ObjectExpr13())
+            @property
+            def GetHashCode(self) -> Callable[[str], int]:
+                def _arrow13(x_1: str) -> int:
+                    return string_hash(x_1)
+
+                return _arrow13
+
+        return not contains(player_on_goal_square, FSharpMap__get_Values(board), ObjectExpr14())
 
     else: 
         return False
@@ -287,11 +311,14 @@ def lookup_board(boardnr: int, state: str) -> Any:
 
         else: 
             last_move: str = state[len(state) - 1]
-            return move_player(lookup_board(boardnr, remove(state, len(state) - 1)), last_move)[0]
+            previous_state: str = remove(state, len(state) - 1)
+            board_1: Any = move_player(lookup_board(boardnr, previous_state), last_move)[0]
+            return board_1
 
 
     else: 
-        return b
+        board: Any = b
+        return board
 
 
 
@@ -314,10 +341,15 @@ def attempt_move(boardnr: int, history: str, move_1: str) -> Tuple[str, str]:
 
 
     else: 
-        pattern_input: Tuple[Any, Optional[str]] = move_player(lookup_board(boardnr, history), move_1)
+        board_2: Any = lookup_board(boardnr, history)
+        pattern_input: Tuple[Any, Optional[str]] = move_player(board_2, move_1)
         move_made: Optional[str] = pattern_input[1]
         board_0027: Any = pattern_input[0]
-        history_0027: str = history + ("" if (move_made is None) else move_made)
+        def _arrow15(__unit: Literal[None]=None, boardnr: int=boardnr, history: str=history, move_1: str=move_1) -> str:
+            move_2: str = move_made
+            return move_2
+
+        history_0027: str = history + ("" if (move_made is None) else _arrow15())
         remember_board(boardnr, history_0027, board_0027)
         if won_game(board_0027):
             return (serialize_board(write_win_on_board(board_0027)), history_0027)
