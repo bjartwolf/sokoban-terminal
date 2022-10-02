@@ -14,15 +14,32 @@ let sprites: HTMLImageElement = document.getElementById("sprites") :?> Browser.T
 let boardNr = 3 
 let mutable moves: string = ""
 
-canvaxContext.drawImage(U3.Case1 sprites, 
-                            0.0,
-                            0.0,
-                            126.0,
-                            46.0,
-                            0.0,
-                            1.0,
-                            48.0,
-                            48.0)
+type Sprite = Blank | Player | Goal | Wall | Coin | BoxOnGoal
+
+let draw (sprite: Sprite) (posx:int) (posy:int)  =
+    let drawImage x y = canvaxContext.drawImage(U3.Case1 sprites, 
+                                float x * 16.0,
+                                float y * 16.0,
+                                16.0,
+                                16.0,
+                                float posx * 48.0,
+                                float posy * 48.0,
+                                48.0,
+                                48.0)
+    match sprite with 
+        | Blank -> drawImage 0 0 
+        | Player -> drawImage 0 1
+        | Goal -> drawImage 0 2
+        | Wall -> drawImage 1 0 
+        | Coin-> drawImage 1 1 
+        | BoxOnGoal -> drawImage 1 2
+
+draw Wall 0 0
+draw Wall 0 1
+draw Wall 1 0
+draw Player 0 2
+draw Player 0 2
+draw Player 0 3
 
 let go (dir: Char) =
     let (board, history)= game.attemptMove(boardNr, moves, dir)
