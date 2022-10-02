@@ -12,13 +12,16 @@
             white-space: pre-wrap;
             font-family: monospace;
         }
+        img {
+            visibility: hidden 
+        }
     </style>
-    <p>Fable is running</p>
-    <div class="game-screen"></div>
-    <button class="button-down">Down</button>
-    <button class="button-up">Up</button>
-    <button class="button-left">Left</button>
-    <button class="button-right">Right</button>
+    <img id="sprites"
+         src="https://cdn.glitch.me/61be1eba-7938-4efd-a7a0-fd78e392f56d%2Fsprites.png?v=1636027123498"
+         alt="" />
+    <canvas id="grafikk"></canvas>
+
+    <div id="game-screen"></div>
     <script src="bundle.js"></script>
 </body>
 </html>
