@@ -8,6 +8,7 @@ global history
 history = ""
 
 tk = Tk()
+tk.title("Sokoban in tkinter")
 tk.geometry("500x500")
 
 canvas= Canvas(tk, width= 500, height= 500, bg="blue")
