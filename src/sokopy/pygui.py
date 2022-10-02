@@ -3,11 +3,28 @@ from game.library import *
 
 print("game 1 go")
 gameNr = 3
-start = init(gameNr)
-print(start)
+board = init(gameNr)
+print(board)
+global history
 history = ""
-while True:
-    cmd = input("Skrive inn l,r,u,d,b")
-    board, history = attempt_move(gameNr, history, cmd)
-    print(board)
-    print(history)
+
+tk = Tk()
+tk.geometry("750x280")
+
+canvas= Canvas(tk, width= 1000, height= 750, bg="blue")
+
+canvas.create_text(300, 100, text=board, fill="white", font=('TkFixedFont'))
+canvas.pack()
+
+def left(self):
+     newboard, newhistory = attempt_move(gameNr, history, "l")
+     print(newboard)
+
+tk.bind('l',left)
+
+tk.mainloop ()
+#while True:
+#    cmd = input("Skrive inn l,r,u,d,b")
+#    board, history = attempt_move(gameNr, history, cmd)
+#    print(board)
+#    print(history)
