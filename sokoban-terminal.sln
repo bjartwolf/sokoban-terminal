@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sokoban-terminal", "src\ter
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "game.tests", "test\game.tests\game.tests.fsproj", "{D1DF9B6D-1F31-45FB-BE61-6AE28E28263F}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "sokoban-web", "sokoban-web\sokoban-web.fsproj", "{82E0428A-ACC4-4027-8320-B179C72CF8AE}"
-EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "sokopy", "src\sokopy\sokopy.fsproj", "{C67C120A-CCF7-4325-8454-F316CF0705AA}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "App", "sokoban-js\src\App.fsproj", "{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "App", "src\sokoban-js\src\App.fsproj", "{CB603496-B704-472D-A9BD-C68370A7D3F6}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "sokoban-web", "src\sokoban-web\sokoban-web.fsproj", "{9214283A-2662-435D-811B-45C4BDA0360D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +33,18 @@ Global
 		{D1DF9B6D-1F31-45FB-BE61-6AE28E28263F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1DF9B6D-1F31-45FB-BE61-6AE28E28263F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1DF9B6D-1F31-45FB-BE61-6AE28E28263F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82E0428A-ACC4-4027-8320-B179C72CF8AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82E0428A-ACC4-4027-8320-B179C72CF8AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82E0428A-ACC4-4027-8320-B179C72CF8AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82E0428A-ACC4-4027-8320-B179C72CF8AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C67C120A-CCF7-4325-8454-F316CF0705AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C67C120A-CCF7-4325-8454-F316CF0705AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C67C120A-CCF7-4325-8454-F316CF0705AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C67C120A-CCF7-4325-8454-F316CF0705AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19CA71B2-65D9-4992-A4D8-A0BC981F45C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB603496-B704-472D-A9BD-C68370A7D3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB603496-B704-472D-A9BD-C68370A7D3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB603496-B704-472D-A9BD-C68370A7D3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB603496-B704-472D-A9BD-C68370A7D3F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9214283A-2662-435D-811B-45C4BDA0360D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9214283A-2662-435D-811B-45C4BDA0360D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9214283A-2662-435D-811B-45C4BDA0360D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9214283A-2662-435D-811B-45C4BDA0360D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
