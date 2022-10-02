@@ -29,3 +29,8 @@ dotnet tool restore
 # Javascript things
 
 <img width="435" alt="image" src="https://user-images.githubusercontent.com/88324093/193473673-19ec4e52-f617-44b8-8050-3a6ef98da33a.png">
+
+# JSON 
+
+![image](https://user-images.githubusercontent.com/88324093/193473744-57b685b0-1c41-4480-9c4e-44dbdaa3f829.png)
+
