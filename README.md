@@ -26,3 +26,6 @@ dotnet tool restore
 
 ```
 
+# Javascript things
+
+<img width="435" alt="image" src="https://user-images.githubusercontent.com/88324093/193473673-19ec4e52-f617-44b8-8050-3a6ef98da33a.png">
