@@ -33,33 +33,24 @@ def up(self):
 
 def down(self):
     move(self, "d")
-def board0(self):
+
+def changeBoard(self, boardNr):
     global history, board, gameNr
     history = ""
-    gameNr = 0
+    gameNr = boardNr 
     board = init(gameNr) 
     canvas.itemconfig(tekst,text = board)
     tk.update()
     return history, board, gameNr
+
+def board0(self):
+    changeBoard(self, 0)
 
 def board1(self):
-    global history, board, gameNr
-    history = ""
-    gameNr = 1
-    board = init(gameNr) 
-    canvas.itemconfig(tekst,text = board)
-    tk.update()
-    return history, board, gameNr
+    changeBoard(self,1)
 
 def board3(self):
-    global history, board, gameNr
-    history = ""
-    gameNr = 3
-    board = init(gameNr) 
-    canvas.itemconfig(tekst,text = board)
-    tk.update()
-    return history, board, gameNr
-
+    changeBoard(self,3)
 
 
 tk.bind('a',left)
