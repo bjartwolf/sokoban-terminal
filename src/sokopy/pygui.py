@@ -15,34 +15,24 @@ canvas= Canvas(tk, width= 500, height= 500, bg="blue")
 tekst = canvas.create_text(250, 250, text=board, fill="white", font=('TkFixedFont'))
 canvas.pack()
 
-def left(self):
+def move(self, direction):
      global history, board, gameNr
-     board, history = attempt_move(gameNr, history, "l")
+     board, history = attempt_move(gameNr, history, direction)
      canvas.itemconfig(tekst,text = board)
      tk.update()
      return board, history
+
+def left(self):
+    move(self, "l")
 
 def right(self):
-     global history, board, gameNr
-     board, history = attempt_move(gameNr, history, "r")
-     canvas.itemconfig(tekst,text = board)
-     tk.update()
-     return board, history
+    move(self, "r")
 
 def up(self):
-     global history, board, gameNr
-     board, history = attempt_move(gameNr, history, "u")
-     canvas.itemconfig(tekst,text = board)
-     tk.update()
-     return board, history
+    move(self,"u")
 
 def down(self):
-     global history, board, gameNr
-     board, history = attempt_move(gameNr, history, "d")
-     canvas.itemconfig(tekst,text = board)
-     tk.update()
-     return board, history
-
+    move(self, "d")
 def board0(self):
     global history, board, gameNr
     history = ""
