@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="pygui.py" />
     <None Include="Readme.md" />
     <Compile Include="Program.fs" />
   </ItemGroup>
