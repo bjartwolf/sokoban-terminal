@@ -1,13 +1,14 @@
 # sokoban-terminal
 I want to make [sokoban](https://en.wikipedia.org/wiki/Sokoban) in the terminal.
-It should be cross-platform.
+It should be cross-platform. I wrote the game in F#, and then I have made UIs to expose the game over web with links, a Python Tkinter client, a Javascript client with UI I borrowed from https://sokoboko.glitch.me/ (https://github.com/Glorp) and a cross plattform .NET terminal UI written in C#.
 
-There is no game, though. Just looks like it for now.
 
 To run try
 ```
 dotnet run --project src/terminal/sokoban-terminal.csproj
 ```
+
+# C# Terminal GUI
 
 It is built with [Terminal.Gui](https://gui-cs.github.io/Terminal.Gui/index.html)
 
