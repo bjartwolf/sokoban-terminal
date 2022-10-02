@@ -34,19 +34,42 @@ let draw (sprite: Sprite) (posx:int) (posy:int)  =
         | Coin-> drawImage 1 1 
         | BoxOnGoal -> drawImage 1 2
 
+canvas.width <- 26.0*48.0
+canvas.height<- 26.0*48.0
+
+
+let renderImage (board:string) =
+    let gameMap = game.parseBoard board 
+    gameMap |> Map.iter ( fun ((x,y):int*int) (tile:char)-> 
+            match tile with 
+                | '#' -> draw Wall x y 
+                | '@' -> draw Player x y 
+                | ' ' -> draw Blank x y 
+                | '.' -> draw Goal x y 
+                | '+' -> draw Player x y 
+                | '*' -> draw BoxOnGoal x y 
+                | '$' -> draw Coin x y 
+                | _ -> draw Blank x y
+            () 
+            )
+    ()
+(*
 draw Wall 0 0
 draw Wall 0 1
 draw Wall 1 0
 draw Player 0 2
 draw Player 0 2
 draw Player 0 3
-
+draw Player 0 4
+*)
 let go (dir: Char) =
     let (board, history)= game.attemptMove(boardNr, moves, dir)
     gameScreen.textContent <- board
+    renderImage board
     moves <- history
 
 gameScreen.textContent <- game.init(boardNr) 
+renderImage (game.init(boardNr))
 document.onkeydown <- fun (keyEvent: KeyboardEvent) -> 
     match keyEvent.key with
         | "a" | "h" | "ArrowLeft" -> go 'l'
