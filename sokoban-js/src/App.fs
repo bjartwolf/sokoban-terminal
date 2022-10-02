@@ -5,6 +5,7 @@ open sokoban
 open Browser.Types
 open System
 open Fable.Core
+open Fable.Core.JsInterop
 
 let gameScreen = document.getElementById("game-screen") :?> Browser.Types.HTMLDivElement
 let canvas = document.getElementById("grafikk") :?> Browser.Types.HTMLCanvasElement
@@ -37,7 +38,6 @@ let draw (sprite: Sprite) (posx:int) (posy:int)  =
 canvas.width <- 26.0*48.0
 canvas.height<- 26.0*48.0
 
-
 let renderImage (board:string) =
     let gameMap = game.parseBoard board 
     gameMap |> Map.iter ( fun ((x,y):int*int) (tile:char)-> 
@@ -53,15 +53,10 @@ let renderImage (board:string) =
             () 
             )
     ()
-(*
-draw Wall 0 0
-draw Wall 0 1
-draw Wall 1 0
-draw Player 0 2
-draw Player 0 2
-draw Player 0 3
-draw Player 0 4
-*)
+ 
+canvaxContext?imageSmoothingEnabled <- false
+canvaxContext?mozImageSmoothingEnabled <- false
+
 let go (dir: Char) =
     let (board, history)= game.attemptMove(boardNr, moves, dir)
     gameScreen.textContent <- board
