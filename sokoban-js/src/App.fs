@@ -71,5 +71,6 @@ document.onkeydown <- fun (keyEvent: KeyboardEvent) ->
         | "w"| "k" | "ArrowUp" -> go 'u'
         | "s" | "j" |"ArrowDown" -> go 'd'
         | "d" | "l" |"ArrowRight" -> go 'r'
+        | "u" | "b"  -> go 'b'
         | _ -> () 
                                  
