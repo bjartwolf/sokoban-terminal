@@ -16,8 +16,13 @@ It is built with [Terminal.Gui](https://gui-cs.github.io/Terminal.Gui/index.html
 
 # Python things
 
+
+<img width="376" alt="image" src="https://user-images.githubusercontent.com/88324093/193473608-f2935b1e-65f3-48c5-940d-cf13bfd3ea3e.png">
+
+
 ```
 dotnet new --install Fable.Template
 dotnet tool restore
 
 ```
+
