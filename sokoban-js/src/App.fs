@@ -12,7 +12,7 @@ let canvas = document.getElementById("grafikk") :?> Browser.Types.HTMLCanvasElem
 let canvaxContext = canvas.getContext_2d() 
 let sprites: HTMLImageElement = document.getElementById("sprites") :?> Browser.Types.HTMLImageElement
 
-let boardNr = 3 
+let mutable boardNr = 3 
 let mutable moves: string = ""
 
 type Sprite = Blank | Player | Goal | Wall | Coin | BoxOnGoal
@@ -63,8 +63,13 @@ let go (dir: Char) =
     renderImage board
     moves <- history
 
-gameScreen.textContent <- game.init(boardNr) 
-renderImage (game.init(boardNr))
+let init nr = 
+    canvaxContext.clearRect(0,0,canvas.width, canvas.height)
+    moves <- ""
+    gameScreen.textContent <- game.init(nr) 
+    renderImage (game.init(nr))
+
+init boardNr
 document.onkeydown <- fun (keyEvent: KeyboardEvent) -> 
     match keyEvent.key with
         | "a" | "h" | "ArrowLeft" -> go 'l'
@@ -72,5 +77,8 @@ document.onkeydown <- fun (keyEvent: KeyboardEvent) ->
         | "s" | "j" |"ArrowDown" -> go 'd'
         | "d" | "l" |"ArrowRight" -> go 'r'
         | "u" | "b"  -> go 'b'
+        | "0" -> boardNr <- 0;init 0 
+        | "1" -> boardNr <- 1; init 1 
+        | "3" -> boardNr <- 3; init 3 
         | _ -> () 
                                  
