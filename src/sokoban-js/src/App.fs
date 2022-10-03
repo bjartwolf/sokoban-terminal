@@ -54,8 +54,7 @@ let renderImage (board:string) =
             )
     ()
  
-canvaxContext?imageSmoothingEnabled <- false
-canvaxContext?mozImageSmoothingEnabled <- false
+canvaxContext.imageSmoothingEnabled <- false
 
 let go (dir: Char) =
     let (board, history)= game.attemptMove(boardNr, moves, dir)
