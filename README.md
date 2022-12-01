@@ -28,7 +28,12 @@ dotnet tool restore
 ```
 
 # Javascript things
-
+Only works on my WSL setup
+```
+cd src/sokoban-js
+npm ci
+npm run start
+```
 <img width="435" alt="image" src="https://user-images.githubusercontent.com/88324093/193473673-19ec4e52-f617-44b8-8050-3a6ef98da33a.png">
 
 # JSON 
