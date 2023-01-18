@@ -13,4 +13,8 @@
     <PackageReference Include="Terminal.Gui.Elmish" Version="2.1.172" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\game\game.fsproj" />
+  </ItemGroup>
+
 </Project>

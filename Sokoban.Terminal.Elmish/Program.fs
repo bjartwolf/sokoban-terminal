@@ -52,6 +52,9 @@ let update (msg:Msg) (model:Model) =
         
 
 let view (model:Model) (dispatch:Msg->unit) =
+    let history = "";
+    let board = sokoban.game.startNewBoard(3);
+
     View.page [
         page.menuBar [
             menubar.menus [
@@ -80,6 +83,13 @@ let view (model:Model) (dispatch:Msg->unit) =
                 prop.position.y.at 1
                 prop.textAlignment.centered
                 prop.color (Color.BrightYellow, Color.Green)
+            ] 
+            View.label [
+                prop.position.x.center
+                prop.position.y.at 1
+                prop.textAlignment.centered
+                prop.color (Color.BrightYellow, Color.Green)
+                label.text board 
             ] 
 
             View.button [
