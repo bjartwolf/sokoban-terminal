@@ -82,6 +82,15 @@ module elmish =
             ]
         ]
 
+    let testModel() : Model * Cmd<Msg> =
+        let model = {
+            History = "History goes here"
+            Board = $"Some board could be rendered here {System.Environment.NewLine} and here and there {System.Environment.NewLine} could be stuff" 
+            BoardNr = 3
+        }
+        model, Cmd.none
+
     Program.mkProgram init update view  
+    //Program.mkProgram testModel update view  
         |> Program.run
 
