@@ -66,6 +66,7 @@ let view (model:Model) (dispatch:Msg->unit) =
             View.button [
                 prop.position.x.at(0)
                 prop.position.y.at 5
+                button.hotKey Key.CursorUp
                 label.text "Up"
                 button.onClick (fun () -> dispatch (Move Up))
             ] 
@@ -73,6 +74,7 @@ let view (model:Model) (dispatch:Msg->unit) =
             View.button [
                 prop.position.x.at(0)
                 prop.position.y.at 7
+                button.hotKey Key.CursorDown
                 label.text "Down"
                 button.onClick (fun () -> dispatch (Move Down))
             ] 
@@ -81,6 +83,7 @@ let view (model:Model) (dispatch:Msg->unit) =
                 prop.position.x.at(0)
                 prop.position.x.center
                 prop.position.y.at 9
+                button.hotKey Key.CursorLeft
                 label.text "Left"
                 button.onClick (fun () -> dispatch (Move Left))
             ] 
@@ -88,6 +91,7 @@ let view (model:Model) (dispatch:Msg->unit) =
             View.button [
                 prop.position.x.at(0)
                 prop.position.y.at 11
+                button.hotKey Key.CursorRight
                 label.text "Right"
                 button.onClick (fun () -> dispatch (Move Right))
             ] 
