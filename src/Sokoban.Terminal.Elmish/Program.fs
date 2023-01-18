@@ -26,13 +26,14 @@ module elmish =
     let update (msg:Msg) (model:Model) =
         let moveDir (m: char) = 
             sokoban.game.attemptMove(model.BoardNr,model.History, m)
-        let (board, history)= match msg with
-                         | Move Right -> moveDir 'r' 
-                         | Move Left -> moveDir 'l' 
-                         | Move Up -> moveDir 'u' 
-                         | Move Down -> moveDir 'd' 
-                         | Move Undo -> moveDir 'b' 
-                         | Level i -> sokoban.game.startNewBoard(i), ""
+        let (board, history) = 
+            match msg with
+             | Move Right -> moveDir 'r' 
+             | Move Left -> moveDir 'l' 
+             | Move Up -> moveDir 'u' 
+             | Move Down -> moveDir 'd' 
+             | Move Undo -> moveDir 'b' 
+             | Level i -> sokoban.game.startNewBoard(i), ""
         match msg with
             | Move _ -> {model with History = history; Board = board}, Cmd.none
             | Level i -> {model with History = history; Board = board; BoardNr = i}, Cmd.none
@@ -71,7 +72,14 @@ module elmish =
                     prop.color (Color.BrightYellow, Color.Green)
                     label.text model.Board 
                 ] 
-           ]
+                View.label [
+                    prop.position.x.center
+                    prop.position.y.percent 90.0
+                    prop.textAlignment.left
+                    prop.color (Color.BrightYellow, Color.Green)
+                    label.text model.History
+                ] 
+            ]
         ]
 
     Program.mkProgram init update view  
