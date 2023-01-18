@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\game\game.fsproj" />
+    <ProjectReference Include="..\game\game.fsproj" />
   </ItemGroup>
 
 </Project>
