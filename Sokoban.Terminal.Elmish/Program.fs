@@ -54,6 +54,13 @@ let view (model:Model) (dispatch:Msg->unit) =
                 ]
             ]
         ]
+        prop.onKeyDown (fun e -> match e.KeyEvent.Key with 
+                                    | Key.l | Key.CursorLeft ->  dispatch (Move (Left)); e.Handled <- true
+                                    | Key.r | Key.CursorRight ->  dispatch (Move (Right)); e.Handled <- true
+                                    | Key.u | Key.CursorUp ->  dispatch (Move (Up)); e.Handled <- true
+                                    | Key.d | Key.CursorDown ->  dispatch (Move (Down)); e.Handled <- true
+                                    | Key.b -> dispatch (Move (Undo))
+                                    | _ ->  ())
         prop.children [
             View.label [
                 prop.position.x.center
@@ -62,47 +69,7 @@ let view (model:Model) (dispatch:Msg->unit) =
                 prop.color (Color.BrightYellow, Color.Green)
                 label.text model.Board 
             ] 
-
-            View.button [
-                prop.position.x.at(0)
-                prop.position.y.at 5
-                button.hotKey Key.CursorUp
-                label.text "Up"
-                button.onClick (fun () -> dispatch (Move Up))
-            ] 
-
-            View.button [
-                prop.position.x.at(0)
-                prop.position.y.at 7
-                button.hotKey Key.CursorDown
-                label.text "Down"
-                button.onClick (fun () -> dispatch (Move Down))
-            ] 
-
-            View.button [
-                prop.position.x.at(0)
-                prop.position.x.center
-                prop.position.y.at 9
-                button.hotKey Key.CursorLeft
-                label.text "Left"
-                button.onClick (fun () -> dispatch (Move Left))
-            ] 
-
-            View.button [
-                prop.position.x.at(0)
-                prop.position.y.at 11
-                button.hotKey Key.CursorRight
-                label.text "Right"
-                button.onClick (fun () -> dispatch (Move Right))
-            ] 
-
-            View.button [
-                prop.position.x.at(0)
-                prop.position.y.at 13
-                label.text "Undo"
-                button.onClick (fun () -> dispatch (Move Undo))
-            ]
-        ]
+       ]
     ]
 
 Program.mkProgram init update view  
