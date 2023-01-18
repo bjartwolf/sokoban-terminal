@@ -20,3 +20,9 @@ let ``Move right from board 3 does not change state`` () =
     let (model', _) = update (Move Right)  model
     Assert.StrictEqual(model.Board, model'.Board)
 
+[<Fact>]
+let ``Move left from board 3 and undo does not change board state`` () =
+    let (model, _) = init ()
+    let (model', _) = update (Move Left)  model
+    let (model'', _) = update (Move Undo)  model'
+    Assert.StrictEqual(model.Board, model''.Board)
