@@ -7,3 +7,16 @@ open Xunit
 let ``Initialized board nr 3`` () =
     let (model, _) = init ()
     Assert.Equal(3, model.BoardNr)
+
+[<Fact>]
+let ``Move left from board 3 changes board state`` () =
+    let (model, _) = init ()
+    let (model', _) = update (Move Left)  model
+    Assert.NotStrictEqual(model.Board, model'.Board)
+
+[<Fact>]
+let ``Move right from board 3 does not change state`` () =
+    let (model, _) = init ()
+    let (model', _) = update (Move Right)  model
+    Assert.StrictEqual(model.Board, model'.Board)
+
