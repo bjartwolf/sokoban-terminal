@@ -3,58 +3,36 @@ open Terminal.Gui
 open System
 
 type Model = {
-    Counter:int
-    IsSpinning: bool
+    History : string
+    Board : string 
 }
 
 type Msg =
-    | Increment
-    | Decrement
-    | Reset
-    | StartSpin
-    | StopSpin
-    | Spinned
-
+    | Up 
+    | Down 
+    | Left 
+    | Right 
+    | Undo 
+let boardNr = 3
 let init () : Model * Cmd<Msg> =
     let model = {
-        Counter = 0
-        IsSpinning = false
+        History = ""
+        Board = sokoban.game.startNewBoard(boardNr)
     }
     model, Cmd.none
 
 
-module Commands =
-    let startSpinning isSpinning =
-        fun dispatch ->
-            async {
-                do! Async.Sleep 20
-                if isSpinning then
-                    dispatch Increment
-                    dispatch Spinned
-            }
-            |> Async.StartImmediate
-        |> Cmd.ofSub
-
 let update (msg:Msg) (model:Model) =
-    match msg with
-    | Increment ->
-        {model with Counter = model.Counter + 1}, Cmd.none
-    | Decrement ->
-        {model with Counter = model.Counter - 1}, Cmd.none
-    | Reset ->
-        {model with Counter = 0}, Cmd.none
-    | StartSpin ->
-        {model with IsSpinning = true}, Commands.startSpinning true
-    | StopSpin ->
-        {model with IsSpinning = false}, Cmd.none
-    | Spinned ->
-        model, Commands.startSpinning model.IsSpinning
-        
+    let move = match msg with
+                     | Right -> 'r'
+                     | Left -> 'l'
+                     | Up -> 'u'
+                     | Down -> 'd'
+                     | Undo -> 'b'
+    let (board,history) = sokoban.game.attemptMove(boardNr,model.History, move)
+    {model with History = history; Board = board}, Cmd.none
 
 let view (model:Model) (dispatch:Msg->unit) =
-    let history = "";
-    let board = sokoban.game.startNewBoard(3);
-
     View.page [
         page.menuBar [
             menubar.menus [
@@ -89,55 +67,43 @@ let view (model:Model) (dispatch:Msg->unit) =
                 prop.position.y.at 1
                 prop.textAlignment.centered
                 prop.color (Color.BrightYellow, Color.Green)
-                label.text board 
+                label.text model.Board 
             ] 
 
             View.button [
-                prop.position.x.center
+                prop.position.x.at(0)
                 prop.position.y.at 5
                 label.text "Up"
-                button.onClick (fun () -> dispatch Increment)
+                button.onClick (fun () -> dispatch Up)
             ] 
-
-            View.label [
-                let c = (model.Counter |> float) / 100.0
-                let x = (16.0 * Math.Cos(c)) |> int 
-                let y = (8.0 * Math.Sin(c)) |> int
-
-                prop.position.x.at (x + 20)
-                prop.position.y.at (y + 10)
-                prop.textAlignment.centered
-                prop.color (Color.Magenta, Color.BrightYellow)
-                label.text $"The Count of 'Fancyness' is {model.Counter}"
-            ] 
-
 
             View.button [
-                prop.position.x.center
+                prop.position.x.at(0)
                 prop.position.y.at 7
                 label.text "Down"
-                button.onClick (fun () -> dispatch Decrement)
+                button.onClick (fun () -> dispatch Down)
             ] 
 
             View.button [
+                prop.position.x.at(0)
                 prop.position.x.center
                 prop.position.y.at 9
-                label.text "Start Spinning"
-                button.onClick (fun () -> dispatch StartSpin)
+                label.text "Left"
+                button.onClick (fun () -> dispatch Left)
             ] 
 
             View.button [
-                prop.position.x.center
+                prop.position.x.at(0)
                 prop.position.y.at 11
-                label.text "Stop Spinning"
-                button.onClick (fun () -> dispatch StopSpin)
+                label.text "Right"
+                button.onClick (fun () -> dispatch Right)
             ] 
 
             View.button [
-                prop.position.x.center
+                prop.position.x.at(0)
                 prop.position.y.at 13
-                label.text "Reset"
-                button.onClick (fun () -> dispatch Reset)
+                label.text "Undo"
+                button.onClick (fun () -> dispatch Undo)
             ]
         ]
     ]
